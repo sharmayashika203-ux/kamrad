@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import TopBar from './components/TopBar';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import LiveMarquee from './components/LiveMarquee';
 import KamradGrid from './components/KamradGrid';
 import Destinations from './components/Destinations';
 import HowItWorks from './components/HowItWorks';
@@ -12,11 +13,13 @@ import MatchWizardModal from './components/MatchWizardModal';
 import AuthModal from './components/AuthModal';
 import ChatModal from './components/ChatModal';
 import SupportDrawer from './components/SupportDrawer';
+import LiveActivityToast from './components/LiveActivityToast';
+import FloatingMatchFAB from './components/FloatingMatchFAB';
 import Footer from './components/Footer';
 import { X, ShieldCheck, MapPin, Calendar, DollarSign, Star, CheckCircle2, MessageSquare } from 'lucide-react';
 
 export default function App() {
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('INR');
   const [filterState, setFilterState] = useState({ destination: '', dates: '', vibe: '', genderFilter: '' });
   
   // Modals state
@@ -59,6 +62,9 @@ export default function App() {
         onOpenWizard={() => setIsWizardOpen(true)}
       />
 
+      {/* Live Scrolling Marquee Ticker */}
+      <LiveMarquee />
+
       {/* 4. Active Verified Companion Explorer Grid */}
       <KamradGrid
         filterState={filterState}
@@ -96,6 +102,10 @@ export default function App() {
         onOpenSupport={() => setIsSupportOpen(true)}
       />
 
+      {/* Floating Dynamic Activity Widgets */}
+      <LiveActivityToast onOpenWizard={() => setIsWizardOpen(true)} />
+      <FloatingMatchFAB onOpenWizard={() => setIsWizardOpen(true)} />
+
       {/* Modals & Drawers */}
       <MatchWizardModal
         isOpen={isWizardOpen}
@@ -132,13 +142,13 @@ export default function App() {
               <img
                 src={selectedProfile.avatar}
                 alt={selectedProfile.name}
-                style={{ width: '76px', height: '76px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #00E676' }}
+                style={{ width: '76px', height: '76px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #10B981', boxShadow: '0 4px 14px rgba(16, 185, 129, 0.3)' }}
               />
               <div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0F172A', margin: 0 }}>
                   {selectedProfile.name}, {selectedProfile.age} {selectedProfile.country}
                 </h3>
-                <div style={{ fontSize: '0.82rem', color: '#00B0FF', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
+                <div style={{ fontSize: '0.82rem', color: '#00F0FF', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
                   <CheckCircle2 size={14} /> 100% Biometric ID Verified
                 </div>
                 <div style={{ fontSize: '0.82rem', color: '#64748B', marginTop: '2px' }}>
@@ -160,7 +170,7 @@ export default function App() {
               <div style={{ fontSize: '0.85rem', color: '#9A3412', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
                 <Calendar size={15} /> Travel Dates: {selectedProfile.dates}
               </div>
-              <div style={{ fontSize: '0.85rem', color: '#00C853', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ fontSize: '0.85rem', color: '#059669', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <DollarSign size={15} /> Expense Split: {selectedProfile.splitCost}
               </div>
             </div>

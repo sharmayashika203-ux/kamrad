@@ -615,33 +615,40 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
           </div>
 
           {/* Links & SOS Button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none' }}>Privacy Policy</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none' }}>Terms of Service</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none' }}>Safety Guidelines</a>
-
-            {/* Emergency SOS Hotline Pill */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', paddingRight: '170px' }}>
+            {/* Emergency SOS Hotline Pill placed first so it is 100% visible and un-obscured */}
             <button
               onClick={onOpenSupport}
               style={{
-                backgroundColor: 'rgba(255, 61, 0, 0.15)',
-                border: '1px solid rgba(255, 61, 0, 0.4)',
-                color: '#FF3D00',
-                padding: '6px 14px',
+                backgroundColor: 'rgba(255, 61, 0, 0.18)',
+                border: '1px solid rgba(255, 61, 0, 0.5)',
+                color: '#FF5E00',
+                padding: '7px 16px',
                 borderRadius: '999px',
                 fontWeight: 800,
-                fontSize: '0.8rem',
+                fontSize: '0.82rem',
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                transition: 'all 0.2s ease'
+                boxShadow: '0 4px 14px rgba(255, 61, 0, 0.25)',
+                transition: 'all 0.25s ease'
               }}
-              onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-              onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 61, 0, 0.25)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.backgroundColor = 'rgba(255, 61, 0, 0.18)';
+              }}
             >
               <PhoneCall size={14} /> 24/7 Emergency SOS Line
             </button>
+
+            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none', fontWeight: 600 }}>Privacy Policy</a>
+            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none', fontWeight: 600 }}>Terms of Service</a>
+            <a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#94A3B8', textDecoration: 'none', fontWeight: 600 }}>Safety Guidelines</a>
           </div>
 
         </div>

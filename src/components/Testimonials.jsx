@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star, Quote, ShieldCheck, Heart } from 'lucide-react';
+import ScrollReveal from './ScrollReveal';
 
 const TESTIMONIALS = [
   {
@@ -16,7 +17,7 @@ const TESTIMONIALS = [
     role: "Digital Nomad",
     origin: "🇬🇧 UK",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-    text: "Saved over $1,200 on car rentals and glacier tours in Iceland by matching with Liam! The biometric ID verification gave me total confidence before we met in Reykjavik.",
+    text: "Saved over ₹95,000 on car rentals and glacier tours in Iceland by matching with Liam! The biometric ID verification gave me total confidence before we met in Reykjavik.",
     rating: 5,
     dest: "Reykjavik, Iceland"
   },
@@ -41,17 +42,19 @@ export default function Testimonials() {
     }}>
       <div className="container">
         
-        <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-          <div className="section-tag">
-            <Heart size={14} /> Traveler Stories
+        <ScrollReveal animation="fade-up" delay={0}>
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <div className="section-tag">
+              <Heart size={14} /> Traveler Stories
+            </div>
+            <h2 className="section-title">
+              Loved by Solo Travelers Worldwide
+            </h2>
+            <p className="section-subtitle">
+              Over 18,400 verified reviews from real travelers who found safe companions and shared incredible journeys.
+            </p>
           </div>
-          <h2 className="section-title">
-            Loved by Solo Travelers Worldwide
-          </h2>
-          <p className="section-subtitle">
-            Over 18,400 verified reviews from real travelers who found safe companions and shared incredible journeys.
-          </p>
-        </div>
+        </ScrollReveal>
 
         <div style={{
           display: 'grid',
@@ -59,49 +62,62 @@ export default function Testimonials() {
           gap: '28px'
         }}>
           {TESTIMONIALS.map((item, idx) => (
-            <div
-              key={idx}
-              style={{
-                backgroundColor: '#F8FAFC',
-                borderRadius: '24px',
-                padding: '32px',
-                border: '1px solid #E2E8F0',
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between'
-              }}
-            >
-              <div>
-                {/* Rating Stars */}
-                <div style={{ display: 'flex', gap: '4px', marginBottom: '16px', color: '#FFB800' }}>
-                  {[...Array(item.rating)].map((_, i) => (
-                    <Star key={i} size={18} fill="#FFB800" />
-                  ))}
-                </div>
-
-                <p style={{ fontSize: '0.95rem', color: '#334155', lineHeight: 1.6, fontStyle: 'italic', marginBottom: '24px' }}>
-                  "{item.text}"
-                </p>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '16px', borderTop: '1px solid #E2E8F0' }}>
-                <img
-                  src={item.avatar}
-                  alt={item.name}
-                  style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #00E676' }}
-                />
+            <ScrollReveal key={idx} animation="zoom-in" delay={100 + idx * 100}>
+              <div
+                style={{
+                  backgroundColor: '#F8FAFC',
+                  borderRadius: '24px',
+                  padding: '32px',
+                  border: '1px solid #E2E8F0',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.borderColor = '#FF6B00';
+                  e.currentTarget.style.boxShadow = '0 16px 35px rgba(255, 107, 0, 0.12)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.borderColor = '#E2E8F0';
+                  e.currentTarget.style.boxShadow = 'none';
+                }}
+              >
                 <div>
-                  <div style={{ fontWeight: 800, fontSize: '0.98rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    {item.name} <span style={{ fontSize: '0.88rem' }}>{item.origin}</span>
+                  {/* Rating Stars */}
+                  <div style={{ display: 'flex', gap: '4px', marginBottom: '16px', color: '#FFB800' }}>
+                    {[...Array(item.rating)].map((_, i) => (
+                      <Star key={i} size={18} fill="#FFB800" />
+                    ))}
                   </div>
-                  <div style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 600 }}>
-                    Matched for {item.dest} • <span style={{ color: '#00C853' }}>Verified Member</span>
+
+                  <p style={{ fontSize: '0.95rem', color: '#334155', lineHeight: 1.6, fontStyle: 'italic', marginBottom: '24px' }}>
+                    "{item.text}"
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '16px', borderTop: '1px solid #E2E8F0' }}>
+                  <img
+                    src={item.avatar}
+                    alt={item.name}
+                    style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #00E676' }}
+                  />
+                  <div>
+                    <div style={{ fontWeight: 800, fontSize: '0.98rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      {item.name} <span style={{ fontSize: '0.88rem' }}>{item.origin}</span>
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 600 }}>
+                      Matched for {item.dest} • <span style={{ color: '#00C853' }}>Verified Member</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-            </div>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
