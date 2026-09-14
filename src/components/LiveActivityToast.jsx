@@ -60,27 +60,7 @@ export default function LiveActivityToast({ onOpenWizard }) {
 
   return (
     <div
-      style={{
-        position: 'fixed',
-        bottom: '24px',
-        left: '24px',
-        zIndex: 999,
-        backgroundColor: 'rgba(11, 19, 43, 0.92)',
-        backdropFilter: 'blur(16px)',
-        border: '1px solid rgba(255, 107, 0, 0.35)',
-        borderRadius: '20px',
-        padding: '14px 18px',
-        boxShadow: '0 12px 35px rgba(0, 0, 0, 0.35), 0 0 20px rgba(255, 107, 0, 0.2)',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
-        maxWidth: '380px',
-        color: '#FFFFFF',
-        transform: animate ? 'translateY(0) scale(1)' : 'translateY(16px) scale(0.95)',
-        opacity: animate ? 1 : 0,
-        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-        cursor: 'pointer'
-      }}
+      className="live-activity-toast"
       onClick={onOpenWizard}
     >
       <div style={{ position: 'relative', flexShrink: 0 }}>
@@ -88,18 +68,18 @@ export default function LiveActivityToast({ onOpenWizard }) {
           src={activity.avatar}
           alt={activity.name}
           style={{
-            width: '44px',
-            height: '44px',
+            width: '42px',
+            height: '42px',
             borderRadius: '50%',
             objectFit: 'cover',
-            border: '2px solid #FF6B00'
+            border: '2px solid #FF5E00'
           }}
         />
         <div style={{
           position: 'absolute',
           bottom: '-2px',
           right: '-2px',
-          backgroundColor: '#00E676',
+          backgroundColor: '#10B981',
           width: '14px',
           height: '14px',
           borderRadius: '50%',
@@ -112,7 +92,7 @@ export default function LiveActivityToast({ onOpenWizard }) {
           <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#FFFFFF' }}>
             {activity.name}
           </span>
-          <span style={{ fontSize: '0.7rem', color: '#FF8A00', fontWeight: 700, backgroundColor: 'rgba(255,107,0,0.15)', padding: '1px 6px', borderRadius: '6px' }}>
+          <span style={{ fontSize: '0.68rem', color: '#FF8A00', fontWeight: 800, backgroundColor: 'rgba(255,94,0,0.2)', padding: '1px 6px', borderRadius: '6px' }}>
             {activity.tag}
           </span>
         </div>
@@ -138,11 +118,40 @@ export default function LiveActivityToast({ onOpenWizard }) {
           borderRadius: '50%',
           transition: 'color 0.2s ease'
         }}
-        onMouseOver={(e) => e.currentTarget.style.color = '#FFFFFF'}
-        onMouseOut={(e) => e.currentTarget.style.color = '#94A3B8'}
       >
         <X size={16} />
       </button>
+
+      <style>{`
+        .live-activity-toast {
+          position: fixed;
+          bottom: 24px;
+          left: 24px;
+          z-index: 999;
+          background-color: rgba(11, 19, 43, 0.94);
+          backdrop-filter: blur(16px);
+          border: 1px solid rgba(255, 94, 0, 0.35);
+          border-radius: 20px;
+          padding: 12px 16px;
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          max-width: 380px;
+          color: #FFFFFF;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+        }
+
+        @media (max-width: 640px) {
+          .live-activity-toast {
+            bottom: 84px !important;
+            left: 14px !important;
+            right: 14px !important;
+            max-width: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -130,10 +130,10 @@ export default function TopBar({ onOpenAuth, currency, setCurrency }) {
                 outline: 'none'
               }}
             >
+              <option value="USD" style={{ color: '#000' }}>$ USD (US Dollar)</option>
               <option value="INR" style={{ color: '#000' }}>₹ INR (India)</option>
-              <option value="USD" style={{ color: '#000' }}>$ USD</option>
-              <option value="EUR" style={{ color: '#000' }}>€ EUR</option>
-              <option value="GBP" style={{ color: '#000' }}>£ GBP</option>
+              <option value="EUR" style={{ color: '#000' }}>€ EUR (Euro)</option>
+              <option value="GBP" style={{ color: '#000' }}>£ GBP (Pound)</option>
             </select>
           </div>
 

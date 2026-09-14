@@ -38,7 +38,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
       position: 'relative',
       overflow: 'hidden',
       paddingTop: '60px',
-      paddingBottom: '40px',
+      paddingBottom: '95px',
       borderTop: '1px solid rgba(255, 255, 255, 0.08)'
     }}>
       
@@ -615,8 +615,8 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
           </div>
 
           {/* Links & SOS Button */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', paddingRight: '170px' }}>
-            {/* Emergency SOS Hotline Pill placed first so it is 100% visible and un-obscured */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }} className="footer-links-row">
+            {/* Emergency SOS Hotline Pill */}
             <button
               onClick={onOpenSupport}
               style={{

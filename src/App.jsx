@@ -19,7 +19,7 @@ import Footer from './components/Footer';
 import { X, ShieldCheck, MapPin, Calendar, DollarSign, Star, CheckCircle2, MessageSquare } from 'lucide-react';
 
 export default function App() {
-  const [currency, setCurrency] = useState('INR');
+  const [currency, setCurrency] = useState('USD');
   const [filterState, setFilterState] = useState({ destination: '', dates: '', vibe: '', genderFilter: '' });
   
   // Modals state

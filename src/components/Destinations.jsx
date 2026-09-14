@@ -9,7 +9,7 @@ const DESTINATIONS_LIST = [
     image: '/images/dest_bali.jpg',
     activeCount: 240,
     temp: '28°C Sunny',
-    avgCost: '₹2,800 - ₹4,800 / day',
+    avgCost: '$35 - $60 / day',
     vibe: 'Tropical & Nomads',
     tag: '🔥 Most Popular'
   },
@@ -19,7 +19,7 @@ const DESTINATIONS_LIST = [
     image: '/images/dest_santorini.jpg',
     activeCount: 210,
     temp: '24°C Sunset Breeze',
-    avgCost: '₹6,500 - ₹11,500 / day',
+    avgCost: '$80 - $140 / day',
     vibe: 'Coastal & Wine',
     tag: '🌅 Sunset & Culture'
   },
@@ -29,7 +29,7 @@ const DESTINATIONS_LIST = [
     image: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80',
     activeCount: 380,
     temp: '18°C Pleasant',
-    avgCost: '₹5,200 - ₹9,000 / day',
+    avgCost: '$65 - $110 / day',
     vibe: 'Food & Cyberpunk',
     tag: '🌸 Food & Tech'
   },
@@ -39,7 +39,7 @@ const DESTINATIONS_LIST = [
     image: 'https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?auto=format&fit=crop&w=800&q=80',
     activeCount: 140,
     temp: '12°C Crisp Alpine',
-    avgCost: '₹9,000 - ₹14,500 / day',
+    avgCost: '$110 - $180 / day',
     vibe: 'Hiking & Skiing',
     tag: '🏔️ Alpine Peak'
   },
@@ -49,7 +49,7 @@ const DESTINATIONS_LIST = [
     image: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
     activeCount: 115,
     temp: '4°C Aurora Glow',
-    avgCost: '₹7,200 - ₹12,000 / day',
+    avgCost: '$90 - $150 / day',
     vibe: 'Roadtrips & Ice',
     tag: '🌌 Northern Lights'
   },
@@ -59,7 +59,7 @@ const DESTINATIONS_LIST = [
     image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=800&q=80',
     activeCount: 190,
     temp: '23°C Mediterranean',
-    avgCost: '₹7,600 - ₹13,000 / day',
+    avgCost: '$95 - $160 / day',
     vibe: 'Sailing & Cuisine',
     tag: '🇮🇹 Coastal Magic'
   }

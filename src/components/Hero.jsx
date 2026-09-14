@@ -161,7 +161,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
           </div>
 
           {/* Main Headline with Dynamic Rotating Text */}
-          <h1 style={{
+          <h1 className="hero-headline" style={{
             fontSize: '3.6rem',
             fontWeight: 900,
             lineHeight: 1.1,
@@ -468,6 +468,12 @@ export default function Hero({ onSearch, onOpenWizard }) {
           box-shadow: 0 8px 24px rgba(255, 94, 0, 0.4) !important;
           justify-content: center !important;
           white-space: nowrap !important;
+        }
+
+        @media (max-width: 768px) {
+          .hero-headline {
+            font-size: 2.2rem !important;
+          }
         }
 
         @media (max-width: 1024px) {

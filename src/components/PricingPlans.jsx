@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Check, Sparkles, ShieldCheck, Zap, Crown, ArrowRight } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
-export default function PricingPlans({ currency = 'INR' }) {
+export default function PricingPlans({ currency = 'USD' }) {
   const [billingCycle, setBillingCycle] = useState('annual'); // 'monthly' or 'annual'
 
-  // Pricing configuration specifically tailored in INR (₹)
   const plans = [
     {
       name: "Explorer",
@@ -27,8 +26,8 @@ export default function PricingPlans({ currency = 'INR' }) {
     {
       name: "Kamrad Pro",
       badge: "🔥 MOST POPULAR",
-      monthlyPrice: 999,
-      annualPrice: 749,
+      monthlyPrice: 12,
+      annualPrice: 9,
       desc: "For active travelers & solo explorers seeking guaranteed safe companions.",
       features: [
         "Unlimited Direct Messaging & Video Calls",
@@ -45,8 +44,8 @@ export default function PricingPlans({ currency = 'INR' }) {
     {
       name: "VIP Globe-Trotter",
       badge: "Ultimate Experience",
-      monthlyPrice: 2499,
-      annualPrice: 1899,
+      monthlyPrice: 29,
+      annualPrice: 22,
       desc: "For frequent wanderers, group leaders & luxury trip planners.",
       features: [
         "Everything in Pro Plan",
@@ -75,10 +74,10 @@ export default function PricingPlans({ currency = 'INR' }) {
               <Sparkles size={14} /> Flexible Membership Plans
             </div>
             <h2 className="section-title">
-              Simple, Transparent Pricing in INR (₹)
+              Simple, Transparent Pricing in USD ($)
             </h2>
             <p className="section-subtitle">
-              Unlock unlimited verified matching, encrypted direct messaging, and split-expense safety features. All transactions are securely processed in INR (₹).
+              Unlock unlimited verified matching, encrypted direct messaging, and split-expense safety features. All transactions are securely processed in USD ($).
             </p>
 
             {/* Billing Toggle */}
@@ -205,7 +204,7 @@ export default function PricingPlans({ currency = 'INR' }) {
                     {/* Price Display */}
                     <div style={{ marginBottom: '28px', display: 'flex', alignItems: 'baseline', gap: '4px' }}>
                       <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '3.2rem', fontWeight: 900, color: '#0F172A', transition: 'all 0.3s ease' }}>
-                        ₹{price.toLocaleString('en-IN')}
+                        ${price}
                       </span>
                       <span style={{ fontSize: '0.95rem', color: '#64748B', fontWeight: 600 }}>
                         / month {billingCycle === 'annual' && price > 0 ? '(billed annually)' : ''}
