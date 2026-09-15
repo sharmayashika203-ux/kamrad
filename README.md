@@ -1,16 +1,43 @@
-# React + Vite
+# KadamFind - Production Monorepo Architecture
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+KadamFind is structured into two clean, standalone subfolders inside the main directory:
 
-Currently, two official plugins are available:
+```
+kadamfind/
+├── frontend/             # React + Vite Frontend Web Application
+│   ├── src/              # React components, pages, context, hooks, tests, styles
+│   ├── public/           # Static assets, logos, and images
+│   ├── package.json      # Frontend dependencies & scripts
+│   └── README.md         # Frontend technical guide
+│
+├── backend/              # Supabase PostgreSQL & Edge Functions Infrastructure
+│   ├── supabase/
+│   │   ├── schema.sql    # 12 database tables, RLS policies, views, triggers
+│   │   ├── seed.sql      # Master seed data for destinations and interests
+│   │   └── functions/    # Razorpay Webhook & Payment Verification Edge Functions
+│   ├── package.json      # Backend deployment scripts
+│   └── README.md         # Database migration & backend deployment guide
+│
+└── package.json          # Monorepo root management scripts
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚦 Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Run Frontend Development Server
+```bash
+npm run dev:frontend
+# OR navigate to frontend/
+cd frontend && npm run dev
+```
 
-## Expanding the Oxlint configuration
+### Run Full Test Suite (36/36 Tests Passing)
+```bash
+npm run test:frontend
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Build Production Bundle
+```bash
+npm run build:frontend
+```

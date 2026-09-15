@@ -1,0 +1,15 @@
+{
+  "name": "kadamfind-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KadamFind Supabase PostgreSQL Database, RLS Policies & Edge Functions",
+  "scripts": {
+    "db:push": "supabase db push",
+    "db:seed": "supabase db reset",
+    "functions:serve": "supabase functions serve",
+    "functions:deploy": "supabase functions deploy verify-payment && supabase functions deploy razorpay-webhook"
+  },
+  "keywords": ["supabase", "postgresql", "razorpay", "edge-functions"],
+  "author": "KadamFind Team",
+  "license": "ISC"
+}
