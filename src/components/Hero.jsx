@@ -302,7 +302,6 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 <option value="Any">Any Gender / Vibe</option>
                 <option value="Female Only">👩 Female Only</option>
                 <option value="Male Only">👨 Male Only</option>
-                <option value="LGBTQ+ Friendly">🌈 LGBTQ+ Friendly</option>
                 <option value="Small Group">👥 Small Group (3-4)</option>
               </select>
             </div>

@@ -170,7 +170,7 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
             destination: prefs.preferred_destinations?.[0] || 'Bali, Indonesia',
             dates: prefs.travel_dates || 'Flexible Dates',
             vibe: prefs.travel_style || 'Adventure',
-            gender: p.gender === 'female' ? 'Female' : p.gender === 'male' ? 'Male' : 'Other',
+            gender: p.gender === 'female' ? 'Female' : 'Male',
             matchScore: Math.floor(Math.random() * 10) + 90,
             bio: p.bio || 'Verified solo traveler looking for companion trips.',
             splitCost: `Budget: ${prefs.budget_level || 'Moderate'}`,

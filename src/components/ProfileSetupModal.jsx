@@ -18,7 +18,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
   // Basic Profile State
   const [fullName, setFullName] = useState('');
   const [dob, setDob] = useState('');
-  const [gender, setGender] = useState('other');
+  const [gender, setGender] = useState('female');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
   const [phone, setPhone] = useState('');
@@ -54,7 +54,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
     // Populate basic info
     setFullName(profile?.full_name || user.user_metadata?.full_name || '');
     setDob(profile?.date_of_birth || '');
-    setGender(profile?.gender || 'other');
+    setGender(profile?.gender || 'female');
     setCity(profile?.city || '');
     setCountry(profile?.country || '');
     setPhone(profile?.phone || '');
@@ -250,7 +250,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
         phone: phone ? sanitizeInput(phone) : null,
         date_of_birth: dob || null,
         age: calculatedAge,
-        gender: gender || 'other',
+        gender: gender || 'female',
         profile_photo: profilePhoto || null,
         bio: sanitizeInput(bio).substring(0, 300),
         country: sanitizedCountry,
@@ -567,8 +567,6 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
                 >
                   <option value="female">Female</option>
                   <option value="male">Male</option>
-                  <option value="non-binary">Non-Binary</option>
-                  <option value="other">Prefer not to say / Other</option>
                 </select>
               </div>
             </div>
