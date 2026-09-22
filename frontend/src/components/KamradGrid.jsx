@@ -4,6 +4,7 @@ import ScrollReveal from './ScrollReveal';
 import confetti from 'canvas-confetti';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { calculateProfileCompletion } from '../lib/profileUtils';
+import KamradSwipeStack from './KamradSwipeStack';
 
 export const KAMRAD_DATA = [
   {
@@ -120,6 +121,13 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
   const [activeTab, setActiveTab] = useState('All');
   const [favorites, setFavorites] = useState({});
   const [dbProfiles, setDbProfiles] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
@@ -287,11 +295,18 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
         </ScrollReveal>
 
         {/* Companion Cards Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-          gap: '28px'
-        }}>
+        {isMobile ? (
+          <ScrollReveal animation="fade-up" delay={200}>
+            <KamradSwipeStack kamrads={filteredKamrads} onConnect={(kamrad) => {
+              if (onConnectChat) onConnectChat(kamrad);
+            }} />
+          </ScrollReveal>
+        ) : (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: '28px'
+          }}>
           {filteredKamrads.map((kamrad, idx) => (
             <ScrollReveal key={kamrad.id} animation="zoom-in" delay={120 + idx * 80}>
               <div
@@ -513,7 +528,8 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
               </div>
             </ScrollReveal>
           ))}
-        </div>
+          </div>
+        )}
 
       </div>
     </section>

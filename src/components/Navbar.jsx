@@ -517,7 +517,8 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              textDecoration: 'none'
             }}
           >
             <span>🏝️ Trending Destinations</span>
@@ -539,7 +540,8 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              textDecoration: 'none'
             }}
           >
             <span>✨ How Kamrad Finder Works</span>
@@ -561,7 +563,8 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              textDecoration: 'none'
             }}
           >
             <span>🛡️ 100% ID Safety Guarantee</span>
@@ -583,7 +586,8 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between'
+              justifyContent: 'space-between',
+              textDecoration: 'none'
             }}
           >
             <span>💎 Membership Plans (USD $)</span>

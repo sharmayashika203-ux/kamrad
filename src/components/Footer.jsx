@@ -87,16 +87,16 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
         <div style={{
           background: 'linear-gradient(180deg, #121A2D 0%, #0D1424 100%)',
           backdropFilter: 'blur(20px)',
-          borderRadius: '28px',
-          padding: '40px 48px',
-          marginBottom: '60px',
+          borderRadius: '24px',
+          padding: '28px 24px',
+          marginBottom: '50px',
           border: '1px solid rgba(255, 255, 255, 0.12)',
           boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          gap: '28px',
+          gap: '24px',
           position: 'relative',
           overflow: 'hidden'
         }}>
@@ -112,7 +112,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
 
           <div>
             {/* Avatar Stack + Live Green Badge matching screenshot */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '16px', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 {[
                   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80",
@@ -141,13 +141,14 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
                 backgroundColor: 'rgba(16, 185, 129, 0.12)',
                 color: '#10B981',
                 border: '1px solid rgba(16, 185, 129, 0.3)',
-                padding: '5px 14px',
+                padding: '5px 12px',
                 borderRadius: '999px',
-                fontSize: '0.82rem',
+                fontSize: '0.75rem',
                 fontWeight: 700,
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '8px'
+                gap: '6px',
+                whiteSpace: 'nowrap'
               }}>
                 <span className="pulse-dot" style={{ backgroundColor: '#10B981' }} />
                 1,420 Active Matches Today
@@ -157,7 +158,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
             {/* Headline matching screenshot */}
             <h3 style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: '2.4rem',
+              fontSize: '1.8rem',
               fontWeight: 800,
               color: '#FFFFFF',
               marginBottom: '10px',
@@ -169,10 +170,10 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
 
             {/* Subtitle matching screenshot */}
             <p style={{
-              fontSize: '1.02rem',
+              fontSize: '0.9rem',
               color: '#94A3B8',
               maxWidth: '520px',
-              lineHeight: 1.55,
+              lineHeight: 1.5,
               fontWeight: 400
             }}>
               Connect with 100% ID-verified travel companions who match your dates, destination, budget, and travel vibe.

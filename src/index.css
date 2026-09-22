@@ -136,6 +136,37 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Utility Animations */
+@keyframes marqueeMobile {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% - 30px)); }
+}
+
+@media (max-width: 768px) {
+  .topbar-mobile-marquee {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    padding: 0 !important;
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+  .topbar-mobile-marquee > .marquee-content {
+    display: flex !important;
+    align-items: center;
+    gap: 30px !important;
+    min-width: max-content;
+  }
+  .marquee-group {
+    display: flex !important;
+    align-items: center;
+    gap: 30px !important;
+    animation: marqueeMobile 12s linear infinite;
+    min-width: max-content;
+  }
+}
+
 .animated-gradient-text {
   background: linear-gradient(135deg, #FF5E00 0%, #FFA800 25%, #00F0FF 50%, #EC4899 75%, #FF0055 100%);
   background-size: 250% auto;

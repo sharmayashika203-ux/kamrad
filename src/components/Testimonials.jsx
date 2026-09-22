@@ -66,8 +66,8 @@ export default function Testimonials() {
               <div
                 style={{
                   backgroundColor: '#F8FAFC',
-                  borderRadius: '24px',
-                  padding: '32px',
+                  borderRadius: '20px',
+                  padding: '24px',
                   border: '1px solid #E2E8F0',
                   position: 'relative',
                   display: 'flex',
@@ -89,28 +89,28 @@ export default function Testimonials() {
               >
                 <div>
                   {/* Rating Stars */}
-                  <div style={{ display: 'flex', gap: '4px', marginBottom: '16px', color: '#FFB800' }}>
+                  <div style={{ display: 'flex', gap: '4px', marginBottom: '12px', color: '#FFB800' }}>
                     {[...Array(item.rating)].map((_, i) => (
-                      <Star key={i} size={18} fill="#FFB800" />
+                      <Star key={i} size={16} fill="#FFB800" />
                     ))}
                   </div>
 
-                  <p style={{ fontSize: '0.95rem', color: '#334155', lineHeight: 1.6, fontStyle: 'italic', marginBottom: '24px' }}>
+                  <p style={{ fontSize: '0.85rem', color: '#334155', lineHeight: 1.5, fontStyle: 'italic', marginBottom: '20px' }}>
                     "{item.text}"
                   </p>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '16px', borderTop: '1px solid #E2E8F0' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', paddingTop: '16px', borderTop: '1px solid #E2E8F0' }}>
                   <img
                     src={item.avatar}
                     alt={item.name}
-                    style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #00E676' }}
+                    style={{ width: '38px', height: '38px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #00E676', flexShrink: 0 }}
                   />
                   <div>
-                    <div style={{ fontWeight: 800, fontSize: '0.98rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {item.name} <span style={{ fontSize: '0.88rem' }}>{item.origin}</span>
+                    <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                      {item.name} <span style={{ fontSize: '0.75rem' }}>{item.origin}</span>
                     </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 600 }}>
+                    <div style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600 }}>
                       Matched for {item.dest} • <span style={{ color: '#00C853' }}>Verified Member</span>
                     </div>
                   </div>

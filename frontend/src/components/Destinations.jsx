@@ -110,8 +110,9 @@ export default function Destinations({ onSelectDest }) {
         {/* Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-          gap: '28px'
+          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          justifyContent: 'center',
+          gap: '24px'
         }}>
           {DESTINATIONS_LIST.map((dest, idx) => (
             <ScrollReveal key={dest.id} animation="fade-up" delay={100 + idx * 80}>
@@ -121,7 +122,7 @@ export default function Destinations({ onSelectDest }) {
                   borderRadius: '24px',
                   overflow: 'hidden',
                   position: 'relative',
-                  height: '380px',
+                  height: '340px',
                   cursor: 'pointer',
                   boxShadow: '0 12px 30px rgba(0, 0, 0, 0.08)',
                   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -158,40 +159,53 @@ export default function Destinations({ onSelectDest }) {
                   background: 'linear-gradient(to top, rgba(11, 19, 43, 0.95) 0%, rgba(11, 19, 43, 0.4) 50%, rgba(0,0,0,0.1) 100%)'
                 }} />
 
-                {/* Top Pill Tag */}
+                {/* Top Tags Container */}
                 <div style={{
                   position: 'absolute',
                   top: '16px',
                   left: '16px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.92)',
-                  backdropFilter: 'blur(8px)',
-                  color: '#0F172A',
-                  fontSize: '0.78rem',
-                  fontWeight: 800,
-                  padding: '4px 14px',
-                  borderRadius: '999px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-                }}>
-                  {dest.tag}
-                </div>
-
-                {/* Top Active Kamrad Badge */}
-                <div style={{
-                  position: 'absolute',
-                  top: '16px',
                   right: '16px',
-                  backgroundColor: 'rgba(16, 185, 129, 0.95)',
-                  color: '#FFFFFF',
-                  fontSize: '0.78rem',
-                  fontWeight: 800,
-                  padding: '4px 14px',
-                  borderRadius: '999px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)'
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '8px'
                 }}>
-                  <Users size={13} /> {dest.activeCount} Kamrads Active
+                  {/* Top Pill Tag */}
+                  <div style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                    backdropFilter: 'blur(8px)',
+                    color: '#0F172A',
+                    fontSize: '0.68rem',
+                    fontWeight: 800,
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
+                  }}>
+                    {dest.tag}
+                  </div>
+
+                  {/* Top Active Kamrad Badge */}
+                  <div style={{
+                    backgroundColor: 'rgba(16, 185, 129, 0.95)',
+                    color: '#FFFFFF',
+                    fontSize: '0.68rem',
+                    fontWeight: 800,
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    boxShadow: '0 4px 14px rgba(16, 185, 129, 0.4)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    flexShrink: 0
+                  }}>
+                    <Users size={12} /> {dest.activeCount} Active
+                  </div>
                 </div>
 
                 {/* Bottom Card Content */}
