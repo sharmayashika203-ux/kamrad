@@ -49,8 +49,8 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
       id: 'kamrad_pro',
       name: "Kamrad Pro",
       badge: "🔥 MOST POPULAR",
-      monthlyPrice: 12,
-      annualPrice: 9,
+      monthlyPrice: 38,
+      annualPrice: 30,
       desc: "For active travelers & solo explorers seeking guaranteed safe companions.",
       features: [
         "Unlimited Direct Messaging & Video Calls",
@@ -68,8 +68,8 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
       id: 'globetrotter_vip',
       name: "VIP Globe-Trotter",
       badge: "Ultimate Experience",
-      monthlyPrice: 29,
-      annualPrice: 22,
+      monthlyPrice: 149,
+      annualPrice: 125,
       desc: "For frequent wanderers, group leaders & luxury trip planners.",
       features: [
         "Everything in Pro Plan",

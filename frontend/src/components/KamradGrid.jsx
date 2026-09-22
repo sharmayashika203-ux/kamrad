@@ -11,7 +11,7 @@ export const KAMRAD_DATA = [
     name: "Sophia Chen",
     age: 26,
     country: "🇺🇸 USA",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    avatar: "/images/sophia.jpg",
     destination: "Bali, Indonesia",
     dates: "Oct 12 - Oct 28",
     vibe: "Nomad",
@@ -29,7 +29,7 @@ export const KAMRAD_DATA = [
     name: "Liam O'Connor",
     age: 29,
     country: "🇮🇪 Ireland",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    avatar: "/images/liam.jpg",
     destination: "Swiss Alps",
     dates: "Nov 02 - Nov 15",
     vibe: "Adventure",
@@ -47,7 +47,7 @@ export const KAMRAD_DATA = [
     name: "Aria Thorne",
     age: 25,
     country: "🇨🇦 Canada",
-    avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+    avatar: "/images/aria.jpg",
     destination: "Santorini, Greece",
     dates: "Oct 20 - Nov 04",
     vibe: "Beach",
@@ -65,7 +65,7 @@ export const KAMRAD_DATA = [
     name: "Diego Rossi",
     age: 31,
     country: "🇮🇹 Italy",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    avatar: "/images/diego.jpg",
     destination: "Tokyo, Japan",
     dates: "Nov 10 - Nov 25",
     vibe: "Foodie",
@@ -83,15 +83,15 @@ export const KAMRAD_DATA = [
     name: "Priya Sharma",
     age: 27,
     country: "🇮🇳 India",
-    avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80",
-    destination: "Reykjavik, Iceland",
+    avatar: "/images/priya.jpg",
+    destination: "Venice, Italy",
     dates: "Dec 01 - Dec 12",
-    vibe: "Adventure",
+    vibe: "Romance & Canals",
     gender: "Female",
     matchScore: 97,
-    bio: "Northern Lights chase! Renting a 4x4 camper van in Iceland to explore ice caves & thermal lagoons. Looking for 1-2 travel partners to share driving!",
-    splitCost: "Splitting 4x4 Camper Van & Fuel",
-    tags: ["#NorthernLights", "#IceCaves", "#Roadtrip", "#CamperLife"],
+    bio: "Venetian romance & canal tour! Exploring historic gondolas, St. Mark's Basilica & wine tasting along Grand Canal. Looking for 1-2 travel companions!",
+    splitCost: "Splitting Private Gondola & Canal Tour",
+    tags: ["#GondolaTour", "#VeniceCanals", "#GrandCanal", "#WineTasting"],
     verified: true,
     tripsCompleted: 11,
     rating: 5.0
@@ -101,7 +101,7 @@ export const KAMRAD_DATA = [
     name: "Lucas Weber",
     age: 28,
     country: "🇩🇪 Germany",
-    avatar: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=400&q=80",
+    avatar: "/images/lucas.jpg",
     destination: "Amalfi Coast, Italy",
     dates: "Oct 15 - Oct 25",
     vibe: "Luxury",
@@ -232,14 +232,17 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
         <ScrollReveal animation="fade-up" delay={0}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="section-tag">
-              <Sparkles size={14} /> Active Verified Companions
+              <Sparkles size={14} /> Explore Travelers
             </div>
             <h2 className="section-title">
-              Meet Verified Travelers Ready to Connect
+              Find People Who Love to Travel
             </h2>
-            <p className="section-subtitle">
-              Every Kamrad profile undergoes 100% biometric ID & background verification. Compare trip dates, budget split rules, and compatibility scores.
+            <p className="section-subtitle" style={{ maxWidth: '720px', margin: '0 auto 14px' }}>
+              Connect with travelers who share your interests, hobbies, and travel plans. Discover profiles, compare travel preferences, and find the right people to make your next journey more memorable.
             </p>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#FF5E00', fontWeight: 800, fontSize: '1rem', cursor: 'pointer' }}>
+              Explore Travelers →
+            </div>
           </div>
         </ScrollReveal>
 
@@ -286,7 +289,7 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
         {/* Companion Cards Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
           gap: '28px'
         }}>
           {filteredKamrads.map((kamrad, idx) => (
@@ -294,189 +297,217 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
               <div
                 style={{
                   backgroundColor: '#FFFFFF',
-                  borderRadius: '24px',
-                  padding: '24px',
+                  borderRadius: '22px',
                   border: '1px solid #E2E8F0',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
+                  boxShadow: '0 12px 35px rgba(15, 23, 42, 0.06)',
                   transition: 'all 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  height: '100%'
+                  height: '100%',
+                  overflow: 'hidden'
                 }}
                 className="companion-card"
                 onMouseOver={(e) => {
                   e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = '0 22px 45px rgba(255, 107, 0, 0.15)';
+                  e.currentTarget.style.boxShadow = '0 24px 50px rgba(255, 94, 0, 0.16)';
                   e.currentTarget.style.borderColor = '#FFD8A8';
                 }}
                 onMouseOut={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.05)';
+                  e.currentTarget.style.boxShadow = '0 12px 35px rgba(15, 23, 42, 0.06)';
                   e.currentTarget.style.borderColor = '#E2E8F0';
                 }}
               >
-                {/* Top Header Card Info */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '16px' }}>
-                    
-                    {/* Avatar with Verified Ring Badge */}
-                    <div style={{ position: 'relative' }}>
-                      <img
-                        src={kamrad.avatar}
-                        alt={kamrad.name}
-                        style={{
-                          width: '72px',
-                          height: '72px',
-                          borderRadius: '50%',
-                          objectFit: 'cover',
-                          border: '3px solid #00E676',
-                          boxShadow: '0 4px 12px rgba(0, 230, 118, 0.3)',
-                          transition: 'transform 0.3s ease'
-                        }}
-                      />
-                      <div style={{
-                        position: 'absolute',
-                        bottom: '-2px',
-                        right: '-2px',
-                        backgroundColor: '#00E676',
-                        color: '#FFFFFF',
-                        width: '24px',
-                        height: '24px',
+                {/* Top Photo Cover Container */}
+                <div style={{ position: 'relative', height: '230px', width: '100%', overflow: 'hidden' }}>
+                  <img
+                    src={kamrad.avatar}
+                    alt={kamrad.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s ease'
+                    }}
+                  />
+                  {/* Subtle Gradient Overlay */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, rgba(15, 23, 42, 0.5) 0%, transparent 40%, rgba(15, 23, 42, 0.6) 100%)'
+                  }} />
+
+                  {/* Top Left Name Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '14px',
+                    left: '14px',
+                    background: 'rgba(15, 23, 42, 0.65)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)',
+                    color: '#FFFFFF',
+                    padding: '5px 12px',
+                    borderRadius: '999px',
+                    fontSize: '0.88rem',
+                    fontWeight: 800,
+                    border: '1px solid rgba(255, 255, 255, 0.25)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}>
+                    <span>{kamrad.name.split(' ')[0]}</span>
+                  </div>
+
+                  {/* Top Right Actions (Favorite & Share) */}
+                  <div style={{ position: 'absolute', top: '14px', right: '14px', display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={(e) => toggleFavorite(e, kamrad.id)}
+                      className={favorites[kamrad.id] ? 'heart-active' : ''}
+                      style={{
+                        background: favorites[kamrad.id] ? '#FFE4E6' : 'rgba(15, 23, 42, 0.6)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        border: '1px solid rgba(255, 255, 255, 0.25)',
                         borderRadius: '50%',
+                        width: '38px',
+                        height: '38px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        border: '2px solid #FFFFFF'
-                      }}>
-                        <ShieldCheck size={14} />
-                      </div>
+                        cursor: 'pointer',
+                        transition: 'all 0.25s ease',
+                        color: favorites[kamrad.id] ? '#E11D48' : '#FFFFFF'
+                      }}
+                    >
+                      <Heart size={18} fill={favorites[kamrad.id] ? '#E11D48' : 'none'} />
+                    </button>
+                  </div>
+
+                  {/* Bottom Right Match Score Badge */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '12px',
+                    right: '14px',
+                    background: 'linear-gradient(135deg, #FF5E00, #FF0055)',
+                    color: '#FFFFFF',
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    fontSize: '0.78rem',
+                    fontWeight: 800,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    boxShadow: '0 4px 14px rgba(255, 94, 0, 0.4)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)'
+                  }}>
+                    <Sparkles size={12} /> {kamrad.matchScore}% Match
+                  </div>
+                </div>
+
+                {/* Bottom Content Area */}
+                <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'space-between' }}>
+                  <div>
+                    {/* Location Tag */}
+                    <div style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      color: '#64748B',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                      marginBottom: '4px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}>
+                      <MapPin size={12} style={{ color: '#FF5E00' }} /> {kamrad.destination}
                     </div>
 
-                    {/* Right Header Match & Favorite */}
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-                      <div style={{
-                        backgroundColor: 'rgba(255, 107, 0, 0.1)',
-                        color: '#FF6B00',
-                        border: '1px solid rgba(255, 107, 0, 0.25)',
-                        padding: '4px 12px',
-                        borderRadius: '999px',
-                        fontSize: '0.82rem',
-                        fontWeight: 800,
+                    {/* Trip Title */}
+                    <h3 style={{
+                      fontSize: '1.18rem',
+                      fontWeight: 800,
+                      color: '#0F172A',
+                      fontFamily: "'Outfit', sans-serif",
+                      marginBottom: '6px',
+                      lineHeight: 1.3
+                    }}>
+                      {kamrad.name.split(' ')[0]}'s {kamrad.destination.split(',')[0]} Trip
+                    </h3>
+
+                    {/* Dates */}
+                    <div style={{
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      color: '#475569',
+                      marginBottom: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px'
+                    }}>
+                      <Calendar size={14} style={{ color: '#00F0FF' }} /> {kamrad.dates}
+                    </div>
+
+                    {/* Bio Description */}
+                    <p style={{
+                      fontSize: '0.88rem',
+                      color: '#64748B',
+                      lineHeight: 1.5,
+                      marginBottom: '14px',
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden'
+                    }}>
+                      "{kamrad.bio}"
+                    </p>
+
+                    {/* Budget & Verified Rating Bar */}
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginBottom: '16px'
+                    }}>
+                      <span style={{
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        color: '#059669',
+                        backgroundColor: '#ECFDF5',
+                        padding: '4px 10px',
+                        borderRadius: '8px',
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px'
                       }}>
-                        <Sparkles size={12} /> {kamrad.matchScore}% Match
-                      </div>
-
-                      <button
-                        onClick={(e) => toggleFavorite(e, kamrad.id)}
-                        className={favorites[kamrad.id] ? 'heart-active' : ''}
-                        style={{
-                          background: favorites[kamrad.id] ? '#FFE4E6' : '#F1F5F9',
-                          border: 'none',
-                          borderRadius: '50%',
-                          width: '36px',
-                          height: '36px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          cursor: 'pointer',
-                          transition: 'all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                          color: favorites[kamrad.id] ? '#E11D48' : '#94A3B8',
-                          boxShadow: favorites[kamrad.id] ? '0 4px 12px rgba(225, 29, 72, 0.25)' : 'none'
-                        }}
-                      >
-                        <Heart size={18} fill={favorites[kamrad.id] ? '#E11D48' : 'none'} />
-                      </button>
-                    </div>
-
-                  </div>
-
-                  {/* Name & Title */}
-                  <div style={{ marginBottom: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F172A' }}>
-                        {kamrad.name}, {kamrad.age}
-                      </h3>
-                      <span style={{ fontSize: '1.1rem' }}>{kamrad.country}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#00B0FF', backgroundColor: '#E0F7FA', padding: '2px 8px', borderRadius: '6px', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <CheckCircle2 size={12} /> ID VERIFIED
+                        <DollarSign size={13} style={{ color: '#059669' }} /> {kamrad.splitCost}
                       </span>
-                      <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: 600 }}>
+                      <span style={{ fontSize: '0.8rem', color: '#64748B', fontWeight: 700 }}>
                         ⭐ {kamrad.rating} ({kamrad.tripsCompleted} trips)
                       </span>
                     </div>
                   </div>
 
-                  {/* Upcoming Destination Pill Box */}
-                  <div style={{
-                    backgroundColor: '#FFF8ED',
-                    border: '1px solid #FFD8A8',
-                    borderRadius: '16px',
-                    padding: '12px 14px',
-                    marginBottom: '14px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '6px'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 800, color: '#C2410C' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                        <MapPin size={15} style={{ color: '#FF6B00' }} /> {kamrad.destination}
-                      </span>
-                      <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#9A3412', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <Calendar size={13} /> {kamrad.dates}
-                      </span>
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <DollarSign size={13} style={{ color: '#00C853' }} /> {kamrad.splitCost}
-                    </div>
+                  {/* Action Buttons */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', paddingTop: '14px', borderTop: '1px solid #F1F5F9' }}>
+                    <button
+                      onClick={() => onViewProfile(kamrad)}
+                      className="btn-outline"
+                      style={{ justifyContent: 'center', padding: '9px 12px', fontSize: '0.85rem', borderRadius: '12px' }}
+                    >
+                      View Trip
+                    </button>
+
+                    <button
+                      onClick={() => onConnectChat(kamrad)}
+                      className="btn-primary"
+                      style={{ justifyContent: 'center', padding: '9px 12px', fontSize: '0.85rem', borderRadius: '12px' }}
+                    >
+                      <MessageSquare size={15} />
+                      Connect
+                    </button>
                   </div>
-
-                  {/* Bio text */}
-                  <p style={{ fontSize: '0.9rem', color: '#475569', lineHeight: 1.5, marginBottom: '16px' }}>
-                    "{kamrad.bio}"
-                  </p>
-
-                  {/* Tags */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
-                    {kamrad.tags.map((tag, idx) => (
-                      <span key={idx} style={{
-                        backgroundColor: '#F1F5F9',
-                        color: '#475569',
-                        fontSize: '0.75rem',
-                        fontWeight: 700,
-                        padding: '4px 10px',
-                        borderRadius: '8px'
-                      }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', paddingTop: '16px', borderTop: '1px solid #F1F5F9' }}>
-                  <button
-                    onClick={() => onViewProfile(kamrad)}
-                    className="btn-outline"
-                    style={{ justifyContent: 'center', padding: '10px 14px', fontSize: '0.85rem' }}
-                  >
-                    View Itinerary
-                  </button>
-
-                  <button
-                    onClick={() => onConnectChat(kamrad)}
-                    className="btn-primary"
-                    style={{ justifyContent: 'center', padding: '10px 14px', fontSize: '0.85rem' }}
-                  >
-                    <MessageSquare size={15} />
-                    Connect
-                  </button>
                 </div>
 
               </div>

@@ -21,8 +21,8 @@ export const MEMBERSHIP_TIERS = {
   PRO: {
     id: 'kamrad_pro',
     name: 'Kamrad Pro',
-    monthlyPriceUsd: 12,
-    annualPriceUsd: 9,
+    monthlyPriceUsd: 38,
+    annualPriceUsd: 30,
     features: {
       connectionInvitesPerMonth: Infinity,
       unlimitedMessaging: true,
@@ -36,8 +36,8 @@ export const MEMBERSHIP_TIERS = {
   VIP: {
     id: 'globetrotter_vip',
     name: 'VIP Globe-Trotter',
-    monthlyPriceUsd: 29,
-    annualPriceUsd: 22,
+    monthlyPriceUsd: 149,
+    annualPriceUsd: 125,
     features: {
       connectionInvitesPerMonth: Infinity,
       unlimitedMessaging: true,

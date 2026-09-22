@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import { Compass, ArrowRight, Menu, X, ChevronDown, MapPin, Sparkles, Shield, UserCheck, User, LogOut, CheckCircle2, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpenProfileSetup, onOpenNotifications, unreadNotificationsCount = 0 }) {
   const { user, profile, signOut } = useAuth();
-  const [activeTab, setActiveTab] = useState('Destinations');
+  const location = useLocation();
   const [destMenuOpen, setDestMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
-  const scrollToSection = (id, name) => {
-    setActiveTab(name);
+  const closeMenus = () => {
     setMobileMenuOpen(false);
     setDestMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   const displayName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'My Profile';
@@ -39,9 +35,9 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
       }}>
 
         {/* Brand Logo */}
-        <a
-          href="#"
-          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        <Link
+          to="/"
+          onClick={closeMenus}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -94,7 +90,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               Verified Travel Matching
             </div>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Navigation Links */}
         <nav style={{
@@ -109,22 +105,24 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             onMouseEnter={() => setDestMenuOpen(true)}
             onMouseLeave={() => setDestMenuOpen(false)}
           >
-            <button
-              onClick={() => scrollToSection('destinations-section', 'Destinations')}
+            <Link
+              to="/"
+              onClick={closeMenus}
               style={{
-                background: activeTab === 'Destinations' ? '#FFF8ED' : 'transparent',
-                color: activeTab === 'Destinations' ? '#C2410C' : '#475569',
-                border: activeTab === 'Destinations' ? '1.5px solid #FFD8A8' : '1.5px solid transparent',
+                textDecoration: 'none',
+                background: location.pathname === '/' ? '#FFF8ED' : 'transparent',
+                color: location.pathname === '/' ? '#C2410C' : '#475569',
+                border: location.pathname === '/' ? '1.5px solid #FFD8A8' : '1.5px solid transparent',
                 borderRadius: '12px',
                 padding: '8px 18px',
-                fontWeight: activeTab === 'Destinations' ? 700 : 600,
+                fontWeight: location.pathname === '/' ? 700 : 600,
                 fontSize: '0.95rem',
                 cursor: 'pointer',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
                 transition: 'all 0.2s ease',
-                boxShadow: activeTab === 'Destinations' ? '0 2px 8px rgba(255, 94, 0, 0.1)' : 'none'
+                boxShadow: location.pathname === '/' ? '0 2px 8px rgba(255, 94, 0, 0.1)' : 'none'
               }}
             >
               Destinations
@@ -132,7 +130,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                 transform: destMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s ease'
               }} />
-            </button>
+            </Link>
 
             {/* Dropdown Menu */}
             {destMenuOpen && (
@@ -161,9 +159,10 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                   { name: 'Tokyo, Japan', icon: '🌸', tag: '380 Kamrads' },
                   { name: 'Swiss Alps, CH', icon: '🏔️', tag: '140 Kamrads' }
                 ].map((item, idx) => (
-                  <button
+                  <Link
+                    to="/"
                     key={idx}
-                    onClick={() => scrollToSection('destinations-section', 'Destinations')}
+                    onClick={closeMenus}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -185,17 +184,19 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                     <span style={{ fontSize: '0.72rem', color: '#FF5E00', fontWeight: 700, backgroundColor: '#FFF4EC', padding: '2px 8px', borderRadius: '12px' }}>
                       {item.tag}
                     </span>
-                  </button>
+                  </Link>
                 ))}
               </div>
             )}
           </div>
 
-          <button
-            onClick={() => scrollToSection('how-it-works-section', 'How it works')}
+          <Link
+            to="/how-it-works"
+            onClick={closeMenus}
             style={{
-              background: activeTab === 'How it works' ? '#FFF4EC' : 'transparent',
-              color: activeTab === 'How it works' ? '#FF5E00' : '#475569',
+              textDecoration: 'none',
+              background: location.pathname === '/how-it-works' ? '#FFF4EC' : 'transparent',
+              color: location.pathname === '/how-it-works' ? '#FF5E00' : '#475569',
               border: 'none',
               borderRadius: '12px',
               padding: '8px 16px',
@@ -206,13 +207,15 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             }}
           >
             How it works
-          </button>
+          </Link>
 
-          <button
-            onClick={() => scrollToSection('safety-section', 'About')}
+          <Link
+            to="/about"
+            onClick={closeMenus}
             style={{
-              background: activeTab === 'About' ? '#FFF4EC' : 'transparent',
-              color: activeTab === 'About' ? '#FF5E00' : '#475569',
+              textDecoration: 'none',
+              background: location.pathname === '/about' ? '#FFF4EC' : 'transparent',
+              color: location.pathname === '/about' ? '#FF5E00' : '#475569',
               border: 'none',
               borderRadius: '12px',
               padding: '8px 16px',
@@ -223,24 +226,28 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             }}
           >
             About
-          </button>
+          </Link>
 
-          <button
-            onClick={() => scrollToSection('plans-section', 'Plans')}
+          <Link
+            to="/plans"
+            onClick={closeMenus}
             style={{
-              background: activeTab === 'Plans' ? '#FFF4EC' : 'transparent',
-              color: activeTab === 'Plans' ? '#FF5E00' : '#475569',
-              border: 'none',
-              borderRadius: '12px',
-              padding: '8px 16px',
-              fontWeight: 600,
+              textDecoration: 'none',
+              background: '#FFF4EC',
+              color: '#FF5E00',
+              border: '2px solid #0066FF',
+              borderRadius: '24px',
+              padding: '6px 20px',
+              fontWeight: 700,
               fontSize: '0.95rem',
               cursor: 'pointer',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              display: 'inline-flex',
+              alignItems: 'center'
             }}
           >
             Plans
-          </button>
+          </Link>
 
           <button
             onClick={onOpenSupport}
@@ -495,8 +502,9 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             Navigation Menu
           </div>
 
-          <button
-            onClick={() => scrollToSection('destinations-section', 'Destinations')}
+          <Link
+            to="/"
+            onClick={closeMenus}
             style={{
               textAlign: 'left',
               background: '#F8FAFC',
@@ -514,10 +522,11 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
           >
             <span>🏝️ Trending Destinations</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
-          </button>
+          </Link>
 
-          <button
-            onClick={() => scrollToSection('how-it-works-section', 'How it works')}
+          <Link
+            to="/how-it-works"
+            onClick={closeMenus}
             style={{
               textAlign: 'left',
               background: '#F8FAFC',
@@ -535,10 +544,11 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
           >
             <span>✨ How Kamrad Finder Works</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
-          </button>
+          </Link>
 
-          <button
-            onClick={() => scrollToSection('safety-section', 'About')}
+          <Link
+            to="/about"
+            onClick={closeMenus}
             style={{
               textAlign: 'left',
               background: '#F8FAFC',
@@ -556,10 +566,11 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
           >
             <span>🛡️ 100% ID Safety Guarantee</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
-          </button>
+          </Link>
 
-          <button
-            onClick={() => scrollToSection('plans-section', 'Plans')}
+          <Link
+            to="/plans"
+            onClick={closeMenus}
             style={{
               textAlign: 'left',
               background: '#F8FAFC',
@@ -577,7 +588,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
           >
             <span>💎 Membership Plans (USD $)</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
-          </button>
+          </Link>
 
           <button
             onClick={() => {

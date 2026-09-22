@@ -44,14 +44,14 @@ const DESTINATIONS_LIST = [
     tag: '🏔️ Alpine Peak'
   },
   {
-    id: 'iceland',
-    title: 'Reykjavik, Iceland',
-    image: 'https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&q=80',
-    activeCount: 115,
-    temp: '4°C Aurora Glow',
-    avgCost: '$90 - $150 / day',
-    vibe: 'Roadtrips & Ice',
-    tag: '🌌 Northern Lights'
+    id: 'venice',
+    title: 'Venice, Italy',
+    image: '/images/dest_venice.jpg',
+    activeCount: 260,
+    temp: '22°C Golden Sunset',
+    avgCost: '$85 - $150 / day',
+    vibe: 'Canals & Gondolas',
+    tag: '🚣 Romance & Canals'
   },
   {
     id: 'amalfi',

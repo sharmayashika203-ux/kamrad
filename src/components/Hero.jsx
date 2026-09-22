@@ -184,16 +184,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
             </span>
           </h1>
 
-          <p style={{
-            fontSize: '1.2rem',
-            color: '#E2E8F0',
-            maxWidth: '680px',
-            marginBottom: '32px',
-            lineHeight: 1.5,
-            fontWeight: 400
-          }}>
-            Connect with 100% ID-verified travel buddies matching your dates, destination, budget, and travel vibe. Split costs, share unforgettable memories & never travel alone again.
-          </p>
+
         </ScrollReveal>
 
         {/* Interactive Search & Filter Card */}
@@ -205,29 +196,30 @@ export default function Hero({ onSearch, onOpenWizard }) {
 
             {/* Destination Field */}
             <div className="hero-input-field">
-              <label style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', letterSpacing: '0.03em' }}>
                 <MapPin size={13} style={{ color: '#FF5E00' }} /> Where to?
               </label>
               <input
                 type="text"
-                placeholder="e.g. Bali, Tokyo, Paris..."
+                placeholder="e.g. Bali, Tokyo..."
                 value={destination}
                 onChange={(e) => setDestination(e.target.value)}
                 style={{
                   border: 'none',
                   background: 'transparent',
-                  fontSize: '0.95rem',
+                  fontSize: '0.88rem',
                   fontWeight: 700,
                   color: '#0F172A',
                   outline: 'none',
-                  width: '100%'
+                  width: '100%',
+                  textOverflow: 'ellipsis'
                 }}
               />
             </div>
 
             {/* Dates Field */}
             <div className="hero-input-field">
-              <label style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', letterSpacing: '0.03em' }}>
                 <Calendar size={13} style={{ color: '#00F0FF' }} /> Travel Dates
               </label>
               <select
@@ -236,12 +228,13 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 style={{
                   border: 'none',
                   background: 'transparent',
-                  fontSize: '0.92rem',
+                  fontSize: '0.88rem',
                   fontWeight: 700,
                   color: '#0F172A',
                   outline: 'none',
                   cursor: 'pointer',
-                  width: '100%'
+                  width: '100%',
+                  textOverflow: 'ellipsis'
                 }}
               >
                 <option value="Anytime">Anytime Flexible</option>
@@ -254,7 +247,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
 
             {/* Vibe Field */}
             <div className="hero-input-field">
-              <label style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', letterSpacing: '0.03em' }}>
                 <Compass size={13} style={{ color: '#A855F7' }} /> Travel Vibe
               </label>
               <select
@@ -263,15 +256,16 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 style={{
                   border: 'none',
                   background: 'transparent',
-                  fontSize: '0.92rem',
+                  fontSize: '0.88rem',
                   fontWeight: 700,
                   color: '#0F172A',
                   outline: 'none',
                   cursor: 'pointer',
-                  width: '100%'
+                  width: '100%',
+                  textOverflow: 'ellipsis'
                 }}
               >
-                <option value="All Vibes">All Vibes & Styles</option>
+                <option value="All Vibes">All Vibes</option>
                 <option value="Adventure">🏔️ Hiking & Adventure</option>
                 <option value="Beach">🏝️ Beach & Chill</option>
                 <option value="Nomad">💻 Digital Nomad</option>
@@ -282,7 +276,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
 
             {/* Companion Gender Preference */}
             <div className="hero-input-field">
-              <label style={{ fontSize: '0.72rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <label style={{ fontSize: '0.7rem', fontWeight: 800, color: '#64748B', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '4px', letterSpacing: '0.03em' }}>
                 <Users size={13} style={{ color: '#10B981' }} /> Companion Vibe
               </label>
               <select
@@ -291,15 +285,16 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 style={{
                   border: 'none',
                   background: 'transparent',
-                  fontSize: '0.92rem',
+                  fontSize: '0.88rem',
                   fontWeight: 700,
                   color: '#0F172A',
                   outline: 'none',
                   cursor: 'pointer',
-                  width: '100%'
+                  width: '100%',
+                  textOverflow: 'ellipsis'
                 }}
               >
-                <option value="Any">Any Gender / Vibe</option>
+                <option value="Any">Any Gender</option>
                 <option value="Female Only">👩 Female Only</option>
                 <option value="Male Only">👨 Male Only</option>
                 <option value="Small Group">👥 Small Group (3-4)</option>
@@ -373,55 +368,100 @@ export default function Hero({ onSearch, onOpenWizard }) {
         <ScrollReveal animation="fade-up" delay={350}>
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: '20px',
-            paddingTop: '20px',
-            borderTop: '1px solid rgba(255, 255, 255, 0.12)'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '14px',
+            padding: '16px 20px',
+            borderRadius: '24px',
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255, 255, 255, 0.22)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.25)',
+            marginTop: '20px'
           }}>
             {[
-              { value: '450,000+', label: 'Verified Travelers', icon: <Users size={18} style={{ color: '#FF5E00' }} /> },
-              { value: '120+ Countries', label: 'Global Destinations', icon: <MapPin size={18} style={{ color: '#00F0FF' }} /> },
-              { value: '99.4%', label: 'ID Verification Rating', icon: <ShieldCheck size={18} style={{ color: '#10B981' }} /> },
-              { value: '1.8 Million', label: 'Trip Matches Made', icon: <Sparkles size={18} style={{ color: '#EC4899' }} /> }
+              { 
+                value: '450,000+', 
+                label: 'Verified Companions', 
+                icon: <Users size={20} style={{ color: '#FF7A00' }} />,
+                bgGlow: 'rgba(255, 122, 0, 0.2)',
+                borderGlow: 'rgba(255, 122, 0, 0.5)'
+              },
+              { 
+                value: '120+ Countries', 
+                label: 'Global Destinations', 
+                icon: <MapPin size={20} style={{ color: '#00F0FF' }} />,
+                bgGlow: 'rgba(0, 240, 255, 0.2)',
+                borderGlow: 'rgba(0, 240, 255, 0.5)'
+              },
+              { 
+                value: '99.4%', 
+                label: 'ID Verification Rating', 
+                icon: <ShieldCheck size={20} style={{ color: '#10B981' }} />,
+                bgGlow: 'rgba(16, 185, 129, 0.2)',
+                borderGlow: 'rgba(16, 185, 129, 0.5)'
+              },
+              { 
+                value: '1.8 Million', 
+                label: 'Trip Matches Made', 
+                icon: <Sparkles size={20} style={{ color: '#EC4899' }} />,
+                bgGlow: 'rgba(236, 72, 153, 0.2)',
+                borderGlow: 'rgba(236, 72, 153, 0.5)'
+              }
             ].map((stat, idx) => (
               <div
                 key={idx}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
-                  padding: '10px 14px',
-                  borderRadius: '16px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  transition: 'all 0.3s ease'
+                  gap: '14px',
+                  padding: '12px 16px',
+                  borderRadius: '18px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  backdropFilter: 'blur(10px)',
+                  cursor: 'pointer'
                 }}
                 onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-                  e.currentTarget.style.transform = 'translateY(-3px)';
+                  e.currentTarget.style.backgroundColor = stat.bgGlow;
+                  e.currentTarget.style.borderColor = stat.borderGlow;
+                  e.currentTarget.style.transform = 'translateY(-4px)';
+                  e.currentTarget.style.boxShadow = `0 10px 25px ${stat.bgGlow}`;
                 }}
                 onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
                   e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 <div style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  width: '44px',
+                  height: '44px',
+                  borderRadius: '14px',
+                  backgroundColor: stat.bgGlow,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  border: '1px solid rgba(255, 255, 255, 0.2)'
+                  border: `1.5px solid ${stat.borderGlow}`,
+                  boxShadow: `0 0 15px ${stat.bgGlow}`,
+                  flexShrink: 0
                 }}>
                   {stat.icon}
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: '1.25rem', fontWeight: 800, color: '#FFFFFF' }}>
+                  <div style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: '1.25rem',
+                    fontWeight: 800,
+                    color: '#FFFFFF',
+                    letterSpacing: '-0.01em',
+                    textShadow: '0 2px 8px rgba(0,0,0,0.5)'
+                  }}>
                     {stat.value}
                   </div>
-                  <div style={{ fontSize: '0.8rem', color: '#94A3B8', fontWeight: 500 }}>
+                  <div style={{ fontSize: '0.82rem', color: '#F1F5F9', fontWeight: 600, letterSpacing: '0.01em' }}>
                     {stat.label}
                   </div>
                 </div>
@@ -437,35 +477,45 @@ export default function Hero({ onSearch, onOpenWizard }) {
         .hero-search-form {
           background: rgba(255, 255, 255, 0.96);
           backdrop-filter: blur(24px);
-          border-radius: 24px;
-          padding: 16px 20px;
-          box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 94, 0, 0.15);
+          border-radius: 20px;
+          padding: 10px 12px;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 25px rgba(255, 94, 0, 0.12);
           border: 1px solid rgba(255, 255, 255, 0.9);
           color: #0F172A;
           display: grid;
-          grid-template-columns: repeat(4, 1fr) auto;
-          gap: 12px;
+          grid-template-columns: 1.15fr 1fr 1fr 1fr auto;
+          gap: 8px;
           align-items: center;
           margin-bottom: 28px;
+          width: 100%;
+          max-width: 1060px;
         }
 
         .hero-input-field {
           display: flex;
           flex-direction: column;
-          gap: 4px;
+          gap: 3px;
           background-color: #F8FAFC;
-          padding: 10px 14px;
-          border-radius: 16px;
+          padding: 8px 12px;
+          border-radius: 14px;
           border: 1px solid #E2E8F0;
+          transition: all 0.2s ease;
+          min-width: 0;
+        }
+
+        .hero-input-field:focus-within, .hero-input-field:hover {
+          background-color: #FFFFFF;
+          border-color: #CBD5E1;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .hero-search-btn {
-          height: 52px !important;
-          padding: 0 28px !important;
-          font-size: 0.98rem !important;
+          height: 48px !important;
+          padding: 0 20px !important;
+          font-size: 0.92rem !important;
           font-weight: 800 !important;
-          border-radius: 16px !important;
-          box-shadow: 0 8px 24px rgba(255, 94, 0, 0.4) !important;
+          border-radius: 14px !important;
+          box-shadow: 0 6px 20px rgba(255, 94, 0, 0.35) !important;
           justify-content: center !important;
           white-space: nowrap !important;
         }

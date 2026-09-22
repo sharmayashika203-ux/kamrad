@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TopBar from './components/TopBar';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import LiveMarquee from './components/LiveMarquee';
 import KamradGrid from './components/KamradGrid';
 import Destinations from './components/Destinations';
 import HowItWorks from './components/HowItWorks';
@@ -116,44 +116,53 @@ function AppContent() {
         unreadNotificationsCount={unreadCount}
       />
 
-      {/* 3. Hero Banner with Live Search & Match Widget */}
-      <Hero
-        onSearch={handleSearch}
-        onOpenWizard={() => setIsWizardOpen(true)}
-      />
+      <Routes>
+        <Route path="/" element={
+          <>
+            {/* 3. Hero Banner with Live Search & Match Widget */}
+            <Hero
+              onSearch={handleSearch}
+              onOpenWizard={() => setIsWizardOpen(true)}
+            />
 
-      {/* Live Scrolling Marquee Ticker */}
-      <LiveMarquee />
+            {/* 4. Active Verified Companion Explorer Grid */}
+            <KamradGrid
+              filterState={filterState}
+              onConnectChat={handleConnectCompanion}
+              onViewProfile={(kamrad) => setSelectedProfile(kamrad)}
+            />
 
-      {/* 4. Active Verified Companion Explorer Grid */}
-      <KamradGrid
-        filterState={filterState}
-        onConnectChat={handleConnectCompanion}
-        onViewProfile={(kamrad) => setSelectedProfile(kamrad)}
-      />
+            {/* 5. Trending Hot Destinations */}
+            <Destinations
+              onSelectDest={handleSelectDestination}
+            />
+            
+            {/* 9. Real Solo Traveler Stories & Reviews */}
+            <Testimonials />
+          </>
+        } />
 
-      {/* 5. Trending Hot Destinations */}
-      <Destinations
-        onSelectDest={handleSelectDestination}
-      />
+        <Route path="/how-it-works" element={
+          /* 6. How Kamrad Finder Works (4 Step Safety Workflow) */
+          <HowItWorks
+            onOpenWizard={() => setIsWizardOpen(true)}
+          />
+        } />
 
-      {/* 6. How Kamrad Finder Works (4 Step Safety Workflow) */}
-      <HowItWorks
-        onOpenWizard={() => setIsWizardOpen(true)}
-      />
+        <Route path="/about" element={
+          /* 7. Safety & 100% ID Verification Spotlight */
+          <SafetySpotlight
+            onOpenAuth={() => setIsAuthOpen(true)}
+          />
+        } />
 
-      {/* 7. Safety & 100% ID Verification Spotlight */}
-      <SafetySpotlight
-        onOpenAuth={() => setIsAuthOpen(true)}
-      />
-
-      {/* 8. Flexible Subscription & Membership Plans */}
-      <PricingPlans
-        currency={currency}
-      />
-
-      {/* 9. Real Solo Traveler Stories & Reviews */}
-      <Testimonials />
+        <Route path="/plans" element={
+          /* 8. Flexible Subscription & Membership Plans */
+          <PricingPlans
+            currency={currency}
+          />
+        } />
+      </Routes>
 
       {/* 10. Footer */}
       <Footer
@@ -299,8 +308,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
