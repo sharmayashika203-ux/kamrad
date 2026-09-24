@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import TopBar from './components/TopBar';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import StepProcessGrid from './components/StepProcessGrid';
 import KamradGrid from './components/KamradGrid';
 import Destinations from './components/Destinations';
 import HowItWorks from './components/HowItWorks';
 import SafetySpotlight from './components/SafetySpotlight';
 import PricingPlans from './components/PricingPlans';
 import Testimonials from './components/Testimonials';
+import FAQSection from './components/FAQSection';
+import BlogSection from './components/BlogSection';
 import MatchWizardModal from './components/MatchWizardModal';
 import AuthModal from './components/AuthModal';
 import ProfileSetupModal from './components/ProfileSetupModal';
@@ -22,6 +24,16 @@ import Footer from './components/Footer';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { sendTravelInterest, fetchUserNotifications } from './lib/connectionService';
 import { X, MapPin, Calendar, DollarSign, CheckCircle2, MessageSquare } from 'lucide-react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function AppContent() {
   const { user, profile } = useAuth();
@@ -99,13 +111,6 @@ function AppContent() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#F8FAFC' }}>
       
-      {/* 1. Top Notice & Verified Bar */}
-      <TopBar
-        onOpenAuth={() => setIsAuthOpen(true)}
-        currency={currency}
-        setCurrency={setCurrency}
-      />
-
       {/* 2. Main Navigation Bar */}
       <Navbar
         onOpenWizard={() => setIsWizardOpen(true)}
@@ -113,6 +118,7 @@ function AppContent() {
         onOpenSupport={() => setIsSupportOpen(true)}
         onOpenProfileSetup={() => setIsProfileSetupOpen(true)}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
+        onSelectDest={handleSelectDestination}
         unreadNotificationsCount={unreadCount}
       />
 
@@ -124,6 +130,9 @@ function AppContent() {
               onSearch={handleSearch}
               onOpenWizard={() => setIsWizardOpen(true)}
             />
+
+            {/* 3.5. 4-Step Process Grid */}
+            <StepProcessGrid />
 
             {/* 4. Active Verified Companion Explorer Grid */}
             <KamradGrid
@@ -139,6 +148,12 @@ function AppContent() {
             
             {/* 9. Real Solo Traveler Stories & Reviews */}
             <Testimonials />
+
+            {/* 9.5. Travel Guides & Articles (3 Blogs) */}
+            <BlogSection onOpenWizard={() => setIsWizardOpen(true)} />
+
+            {/* 10. Frequently Asked Destination Questions */}
+            <FAQSection />
           </>
         } />
 
@@ -153,6 +168,13 @@ function AppContent() {
           /* 7. Safety & 100% ID Verification Spotlight */
           <SafetySpotlight
             onOpenAuth={() => setIsAuthOpen(true)}
+          />
+        } />
+
+        <Route path="/blog" element={
+          /* Travel Guides & Blogs Route */
+          <BlogSection
+            onOpenWizard={() => setIsWizardOpen(true)}
           />
         } />
 
@@ -309,6 +331,7 @@ function AppContent() {
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AuthProvider>
         <AppContent />
       </AuthProvider>

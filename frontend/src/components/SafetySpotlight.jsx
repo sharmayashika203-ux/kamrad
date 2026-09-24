@@ -146,9 +146,9 @@ export default function SafetySpotlight({ onOpenAuth }) {
                     <ShieldCheck size={24} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#FFF' }}>Biometric Verification Radar</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#FFF' }}>Profile Verification System</div>
                     <div style={{ fontSize: '0.78rem', color: '#10B981', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <Scan size={12} /> Live AI Liveness Detection
+                      <Scan size={12} /> Live Profile Verification
                     </div>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export default function SafetySpotlight({ onOpenAuth }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                 {[
                   'Government Passport / National ID Check',
-                  'Live Biometric 3D Liveness Selfie Scan',
+                  'Government ID & Profile Verification',
                   'Mobile Phone OTP & Email Ownership',
                   'LinkedIn & Instagram Social Verification',
                   'Community Review & Safety Trust Rating'

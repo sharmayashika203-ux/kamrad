@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Users, Sparkles, Sun, ArrowRight, Compass } from 'lucide-react';
+import { MapPin, Users, Sun, ArrowRight, Compass } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 const DESTINATIONS_LIST = [

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Compass, ArrowRight, Menu, X, ChevronDown, MapPin, Sparkles, Shield, UserCheck, User, LogOut, CheckCircle2, Bell } from 'lucide-react';
+import { Compass, ArrowRight, Menu, X, ChevronDown, MapPin, Shield, UserCheck, User, LogOut, CheckCircle2, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useLocation } from 'react-router-dom';
 
-export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpenProfileSetup, onOpenNotifications, unreadNotificationsCount = 0 }) {
+export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpenProfileSetup, onOpenNotifications, onSelectDest, unreadNotificationsCount = 0 }) {
   const { user, profile, signOut } = useAuth();
   const location = useLocation();
   const [destMenuOpen, setDestMenuOpen] = useState(false);
@@ -105,9 +105,9 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             onMouseEnter={() => setDestMenuOpen(true)}
             onMouseLeave={() => setDestMenuOpen(false)}
           >
-            <Link
-              to="/"
-              onClick={closeMenus}
+            <button
+              type="button"
+              onClick={() => setDestMenuOpen(prev => !prev)}
               style={{
                 textDecoration: 'none',
                 background: location.pathname === '/' ? '#FFF8ED' : 'transparent',
@@ -130,7 +130,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                 transform: destMenuOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 transition: 'transform 0.2s ease'
               }} />
-            </Link>
+            </button>
 
             {/* Dropdown Menu */}
             {destMenuOpen && (
@@ -159,14 +159,20 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                   { name: 'Tokyo, Japan', icon: '🌸', tag: '380 Kamrads' },
                   { name: 'Swiss Alps, CH', icon: '🏔️', tag: '140 Kamrads' }
                 ].map((item, idx) => (
-                  <Link
-                    to="/"
+                  <button
+                    type="button"
                     key={idx}
-                    onClick={closeMenus}
+                    onClick={() => {
+                      closeMenus();
+                      if (onSelectDest) {
+                        onSelectDest(item.name.split(',')[0]);
+                      }
+                    }}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
+                      width: '100%',
                       padding: '10px 12px',
                       borderRadius: '8px',
                       border: 'none',
@@ -184,7 +190,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                     <span style={{ fontSize: '0.72rem', color: '#FF5E00', fontWeight: 700, backgroundColor: '#FFF4EC', padding: '2px 8px', borderRadius: '12px' }}>
                       {item.tag}
                     </span>
-                  </Link>
+                  </button>
                 ))}
               </div>
             )}
@@ -226,6 +232,25 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             }}
           >
             About
+          </Link>
+
+          <Link
+            to="/blog"
+            onClick={closeMenus}
+            style={{
+              textDecoration: 'none',
+              background: location.pathname === '/blog' ? '#FFF4EC' : 'transparent',
+              color: location.pathname === '/blog' ? '#FF5E00' : '#475569',
+              border: 'none',
+              borderRadius: '12px',
+              padding: '8px 16px',
+              fontWeight: 600,
+              fontSize: '0.95rem',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            Blog
           </Link>
 
           <Link
@@ -544,7 +569,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               textDecoration: 'none'
             }}
           >
-            <span>✨ How Kamrad Finder Works</span>
+            <span>How Kamrad Finder Works</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
           </Link>
 

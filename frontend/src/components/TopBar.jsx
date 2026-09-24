@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Clock, ShieldCheck, Sparkles, Globe2 } from 'lucide-react';
+import { Mail, Clock, ShieldCheck, Globe2 } from 'lucide-react';
 
 const TICKER_MESSAGES = [
   "🔥 2,840 Kamrad matches made in Bali, Tokyo & Santorini this week!",
-  "🛡️ 100% ID & Biometric Verification Guarantee for all active profiles",
+  "🛡️ 100% ID & Profile Verification Guarantee for all active profiles",
   "✈️ Split Airbnb & Car Rental costs up to 50% with verified travel buddies",
   "⭐ Rated 4.9/5 by over 18,400 solo travelers worldwide"
 ];
@@ -92,7 +92,7 @@ export default function TopBar({ onOpenAuth, currency, setCurrency }) {
         maxWidth: '420px',
         overflow: 'hidden'
       }}>
-        <Sparkles size={14} style={{ color: '#FF6B00', flexShrink: 0 }} />
+        <ShieldCheck size={14} style={{ color: '#FF6B00', flexShrink: 0 }} />
         <span style={{
           fontSize: '0.8rem',
           color: '#F8FAFC',

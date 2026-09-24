@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Zap } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function FloatingMatchFAB({ onOpenWizard }) {
@@ -45,7 +45,7 @@ export default function FloatingMatchFAB({ onOpenWizard }) {
           justifyContent: 'center',
           flexShrink: 0
         }}>
-          <Sparkles size={16} />
+          <Zap size={16} />
         </div>
         <span>AI Match Radar</span>
       </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, UserCheck, Sparkles, MessageSquare, Compass, HeartHandshake, Check } from 'lucide-react';
+import { ShieldCheck, UserCheck, MessageSquare, Compass, HeartHandshake, Check } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 
 export default function HowItWorks({ onOpenWizard }) {
@@ -64,7 +64,7 @@ export default function HowItWorks({ onOpenWizard }) {
         <ScrollReveal animation="fade-up" delay={0}>
           <div style={{ textAlign: 'center', marginBottom: '60px' }}>
             <div className="section-tag">
-              <Sparkles size={14} /> Simplified & Ultra-Safe
+              <ShieldCheck size={14} /> Simplified & Ultra-Safe
             </div>
             <h2 className="section-title">
               How Kamrad Finder Works

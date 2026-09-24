@@ -17,7 +17,7 @@ const TESTIMONIALS = [
     role: "Digital Nomad",
     origin: "🇬🇧 UK",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-    text: "Saved over $1,200 on car rentals and glacier tours in Iceland by matching with Liam! The biometric ID verification gave me total confidence before we met in Reykjavik.",
+    text: "Saved over $1,200 on car rentals and glacier tours in Iceland by matching with Liam! The profile ID verification gave me total confidence before we met in Reykjavik.",
     rating: 5,
     dest: "Reykjavik, Iceland"
   },

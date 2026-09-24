@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Heart, MessageSquare, MapPin, Calendar, DollarSign, Star, Sparkles, Filter, CheckCircle2, UserCheck } from 'lucide-react';
+import { ShieldCheck, Heart, MessageSquare, MapPin, Calendar, DollarSign, Star, Filter, CheckCircle2, UserCheck } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import confetti from 'canvas-confetti';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -240,7 +240,7 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
         <ScrollReveal animation="fade-up" delay={0}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="section-tag">
-              <Sparkles size={14} /> Explore Travelers
+              <ShieldCheck size={14} /> Explore Travelers
             </div>
             <h2 className="section-title">
               Find People Who Love to Travel
@@ -265,7 +265,7 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
             marginBottom: '40px'
           }}>
             {[
-              { id: 'All', label: '✨ All Active Kamrads' },
+              { id: 'All', label: 'All Active Kamrads' },
               { id: 'Solo Female', label: '👩 Solo Female Travelers' },
               { id: 'Adventure', label: '🏔️ Hiking & Adventure' },
               { id: 'Nomads', label: '💻 Digital Nomads' },
@@ -417,7 +417,7 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
                     boxShadow: '0 4px 14px rgba(255, 94, 0, 0.4)',
                     border: '1px solid rgba(255, 255, 255, 0.3)'
                   }}>
-                    <Sparkles size={12} /> {kamrad.matchScore}% Match
+                    {kamrad.matchScore}% Match
                   </div>
                 </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, ShieldCheck, Mail, ArrowRight, Globe, Lock, PhoneCall, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Compass, ShieldCheck, Mail, ArrowRight, Globe, Lock, PhoneCall, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 
@@ -211,7 +211,6 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
                 e.currentTarget.style.boxShadow = '0 0 30px rgba(255, 85, 0, 0.55), 0 4px 15px rgba(255, 85, 0, 0.35)';
               }}
             >
-              <Sparkles size={18} />
               Find Companion Now
             </button>
 
@@ -333,7 +332,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
               {[
                 { text: '100% ID Verified', icon: '🛡️', color: '#00E676' },
                 { text: 'Escrow Protected', icon: '🔒', color: '#00E5FF' },
-                { text: 'Biometric Check', icon: '👤', color: '#E040FB' }
+                { text: 'Profile Verification', icon: '👤', color: '#E040FB' }
               ].map((badge, i) => (
                 <div key={i} style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -400,7 +399,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
           {/* COL 2: EXPLORE PLATFORM */}
           <div>
             <h4 style={{ color: '#FFFFFF', fontSize: '1.05rem', fontWeight: 800, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Sparkles size={16} style={{ color: '#FF6B00' }} /> Explore Platform
+              Explore Platform
             </h4>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.9rem' }}>

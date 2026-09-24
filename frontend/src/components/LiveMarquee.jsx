@@ -1,9 +1,9 @@
 import React from 'react';
-import { Sparkles, MapPin, Zap, CheckCircle2, ShieldCheck, Flame } from 'lucide-react';
+import { MapPin, Zap, CheckCircle2, ShieldCheck, Flame } from 'lucide-react';
 
 const MARQUEE_ITEMS = [
   { text: "⚡ Sophia (USA) matched with Elena (Spain) for Ubud Villa split", tag: "NEW MATCH" },
-  { text: "🛡️ Liam O'Connor verified 3D Biometric Passport for Swiss Alps Hike", tag: "ID VERIFIED" },
+  { text: "🛡️ Liam O'Connor verified Profile Passport for Swiss Alps Hike", tag: "ID VERIFIED" },
   { text: "🍜 Diego Rossi posted a 5-Day Ramen & Izakaya Crawl in Tokyo", tag: "TRIP POST" },
   { text: "🏔️ Priya Sharma created a 4x4 Camper Iceland Northern Lights trip", tag: "GROUP EXPEDITION" },
   { text: "🏝️ Lucas Weber rented a private boat for Amalfi Coast exploring", tag: "VERIFIED KAMRAD" },

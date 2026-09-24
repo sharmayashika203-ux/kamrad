@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, MapPin, Calendar, Compass, ShieldCheck, Users, Sparkles, Plane } from 'lucide-react';
+import { Search, MapPin, Calendar, Compass, ShieldCheck, Users, Plane } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import confetti from 'canvas-confetti';
-
 
 const DESTINATION_ROTATIONS = [
   "Bali, Indonesia 🌴",
@@ -72,8 +71,8 @@ export default function Hero({ onSearch, onOpenWizard }) {
         backgroundImage: `url('/images/hero_travel_bg.jpg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        opacity: 0.35,
-        filter: 'contrast(1.1) saturate(1.2)'
+        opacity: 0.45,
+        filter: 'contrast(1.15) saturate(1.25)'
       }} />
 
       {/* Dynamic Animated Gradient Light Orbs */}
@@ -145,7 +144,6 @@ export default function Hero({ onSearch, onOpenWizard }) {
             marginBottom: '20px',
             boxShadow: '0 8px 20px rgba(0,0,0,0.2)'
           }}>
-            <Sparkles size={16} style={{ color: '#FF8A00' }} />
             <span style={{ fontSize: '0.88rem', fontWeight: 700, color: '#FFFFFF' }}>
               #1 Rated Verified Travel Matching Platform
             </span>
@@ -270,7 +268,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 <option value="Beach">🏝️ Beach & Chill</option>
                 <option value="Nomad">💻 Digital Nomad</option>
                 <option value="Foodie">🍜 Food & Culture</option>
-                <option value="Luxury">✨ Luxury Escape</option>
+                <option value="Luxury">💎 Luxury Escape</option>
               </select>
             </div>
 
@@ -385,7 +383,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
                 label: 'Verified Companions', 
                 icon: <Users size={20} style={{ color: '#FF7A00' }} />,
                 bgGlow: 'rgba(255, 122, 0, 0.2)',
-                 borderGlow: 'rgba(255, 122, 0, 0.5)'
+                borderGlow: 'rgba(255, 122, 0, 0.5)'
               },
               { 
                 value: '120+ Countries', 
@@ -404,7 +402,7 @@ export default function Hero({ onSearch, onOpenWizard }) {
               { 
                 value: '1.8 Million', 
                 label: 'Trip Matches Made', 
-                icon: <Sparkles size={20} style={{ color: '#EC4899' }} />,
+                icon: <Plane size={20} style={{ color: '#EC4899' }} />,
                 bgGlow: 'rgba(236, 72, 153, 0.2)',
                 borderGlow: 'rgba(236, 72, 153, 0.5)'
               }

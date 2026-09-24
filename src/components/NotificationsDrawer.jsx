@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Bell, Check, CheckCheck, Sparkles, Heart, MessageSquare, ShieldCheck, Clock } from 'lucide-react';
+import { X, Bell, Check, CheckCheck, Heart, MessageSquare, ShieldCheck, Clock } from 'lucide-react';
 import { markNotificationAsRead, markAllNotificationsAsRead } from '../lib/connectionService';
 
 export default function NotificationsDrawer({ isOpen, onClose, notifications = [], onRefresh, onSelectNotification }) {
@@ -138,7 +138,7 @@ export default function NotificationsDrawer({ isOpen, onClose, notifications = [
                     justifyContent: 'center',
                     flexShrink: 0
                   }}>
-                    {n.type === 'match' ? <Sparkles size={16} /> : <Heart size={16} />}
+                    <Heart size={16} />
                   </div>
 
                   <div style={{ flex: 1 }}>

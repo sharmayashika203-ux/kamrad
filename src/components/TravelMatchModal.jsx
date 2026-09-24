@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { X, Sparkles, MapPin, Calendar, MessageSquare } from 'lucide-react';
+import { X, MapPin, Calendar, MessageSquare } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function TravelMatchModal({ isOpen, matchData, onClose, onStartChat }) {
@@ -39,7 +39,7 @@ export default function TravelMatchModal({ isOpen, matchData, onClose, onStartCh
           fontWeight: 800,
           marginBottom: '16px'
         }}>
-          <Sparkles size={16} /> Travel Compatibility Match
+          Travel Compatibility Match
         </div>
 
         <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#0F172A', marginBottom: '8px', lineHeight: 1.2 }}>
@@ -118,7 +118,7 @@ export default function TravelMatchModal({ isOpen, matchData, onClose, onStartCh
                   fontSize: '0.78rem',
                   fontWeight: 700
                 }}>
-                  {interest.startsWith('#') ? interest : `✨ ${interest}`}
+                  {interest.startsWith('#') ? interest : `${interest}`}
                 </span>
               ))}
             </div>

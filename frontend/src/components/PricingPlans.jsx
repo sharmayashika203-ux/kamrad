@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Check, Sparkles, Zap, Crown, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Check, Zap, Crown, ArrowRight, CheckCircle2 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import { useAuth } from '../context/AuthContext';
 import { fetchActiveSubscription, normalizePlanId } from '../lib/subscriptionService';
@@ -54,7 +54,7 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
       desc: "For active travelers & solo explorers seeking guaranteed safe companions.",
       features: [
         "Unlimited Direct Messaging & Video Calls",
-        "100% ID & Biometric Verification Badge",
+        "100% Profile & ID Verification Badge",
         "Priority AI Match Radar Engine",
         "Split Cost Escrow Payment Protection",
         "Unlimited Trip Requests & Destination Alerts",
@@ -62,7 +62,7 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
       ],
       cta: "Start 7-Day Free Trial",
       popular: true,
-      icon: <Sparkles size={22} style={{ color: '#FF5E00' }} />
+      icon: <Crown size={22} style={{ color: '#FF5E00' }} />
     },
     {
       id: 'globetrotter_vip',
@@ -143,7 +143,7 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
         <ScrollReveal animation="fade-up" delay={0}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <div className="section-tag">
-              <Sparkles size={14} /> Flexible Membership Plans
+              <Crown size={14} /> Flexible Membership Plans
             </div>
             <h2 className="section-title">
               Simple, Transparent Pricing in USD ($)

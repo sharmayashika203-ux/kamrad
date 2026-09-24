@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, X, CheckCircle2, UserCheck, MapPin } from 'lucide-react';
+import { X, CheckCircle2, UserCheck, MapPin } from 'lucide-react';
 
 const ACTIVITIES = [
   {
@@ -13,7 +13,7 @@ const ACTIVITIES = [
   {
     id: 2,
     name: "Liam O'Connor",
-    action: "verified 3D Biometric ID for Swiss Alps trail!",
+    action: "verified Profile ID for Swiss Alps trail!",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
     time: "2 mins ago",
     tag: "ID Verified"

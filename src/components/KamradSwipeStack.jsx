@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useAnimation, AnimatePresence } from 'framer-motion';
-import { Heart, MapPin, Calendar, Sparkles, X, CheckCircle2 } from 'lucide-react';
+import { Heart, MapPin, Calendar, X, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const Card = ({ kamrad, onSwipe, isTop, index }) => {
@@ -140,7 +140,7 @@ const Card = ({ kamrad, onSwipe, isTop, index }) => {
           </div>
           
           <div style={{ position: 'absolute', bottom: '16px', right: '16px', background: 'linear-gradient(135deg, #FF5E00, #FF0055)', color: '#FFF', padding: '6px 12px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '4px', boxShadow: '0 4px 14px rgba(255, 94, 0, 0.4)' }}>
-            <Sparkles size={14} /> {kamrad.matchScore}% Match
+            {kamrad.matchScore}% Match
           </div>
         </div>
 
@@ -211,7 +211,7 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
   if (cards.length === 0) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '400px', color: '#64748B', textAlign: 'center' }}>
-        <Sparkles size={48} style={{ color: '#E2E8F0', marginBottom: '16px' }} />
+        <Heart size={48} style={{ color: '#E2E8F0', marginBottom: '16px' }} />
         <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#0F172A', marginBottom: '8px' }}>No More Kamrads!</h3>
         <p style={{ fontSize: '0.9rem' }}>Check back later or adjust your filters to see more travelers.</p>
       </div>
