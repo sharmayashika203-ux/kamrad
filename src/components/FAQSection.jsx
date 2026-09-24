@@ -120,8 +120,8 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq-section" style={{
-      padding: '80px 0',
+    <section id="faq-section" className="faq-section" style={{
+      padding: '70px 0',
       background: 'linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)',
       position: 'relative',
       overflow: 'hidden'
@@ -434,6 +434,14 @@ export default function FAQSection() {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .faq-section {
+            padding: 30px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

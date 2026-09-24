@@ -55,14 +55,14 @@ export default function HowItWorks({ onOpenWizard }) {
   ];
 
   return (
-    <section id="how-it-works-section" style={{
-      padding: '90px 0',
+    <section id="how-it-works-section" className="how-it-works-section" style={{
+      padding: '60px 0 80px 0',
       backgroundColor: '#F8FAFC'
     }}>
       <div className="container">
 
         <ScrollReveal animation="fade-up" delay={0}>
-          <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+          <div className="how-it-works-header" style={{ textAlign: 'center', marginBottom: '45px' }}>
             <div className="section-tag">
               <ShieldCheck size={14} /> Simplified & Ultra-Safe
             </div>
@@ -76,7 +76,7 @@ export default function HowItWorks({ onOpenWizard }) {
         </ScrollReveal>
 
         {/* 4 Step Cards Grid */}
-        <div style={{
+        <div className="how-it-works-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
           gap: '28px'
@@ -196,7 +196,7 @@ export default function HowItWorks({ onOpenWizard }) {
 
         {/* CTA Banner inside How It Works */}
         <ScrollReveal animation="fade-up" delay={400}>
-          <div style={{
+          <div className="how-it-works-cta" style={{
             marginTop: '60px',
             background: 'linear-gradient(135deg, #0B132B 0%, #1C2541 100%)',
             borderRadius: '28px',
@@ -230,6 +230,24 @@ export default function HowItWorks({ onOpenWizard }) {
         </ScrollReveal>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .how-it-works-section {
+            padding: 20px 0 32px 0 !important;
+          }
+          .how-it-works-header {
+            margin-bottom: 20px !important;
+          }
+          .how-it-works-grid {
+            gap: 16px !important;
+          }
+          .how-it-works-cta {
+            margin-top: 24px !important;
+            padding: 24px 18px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

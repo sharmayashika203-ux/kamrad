@@ -258,17 +258,15 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             onClick={closeMenus}
             style={{
               textDecoration: 'none',
-              background: '#FFF4EC',
-              color: '#FF5E00',
-              border: '2px solid #0066FF',
-              borderRadius: '24px',
-              padding: '6px 20px',
-              fontWeight: 700,
+              background: location.pathname === '/plans' ? '#FFF4EC' : 'transparent',
+              color: location.pathname === '/plans' ? '#FF5E00' : '#475569',
+              border: 'none',
+              borderRadius: '12px',
+              padding: '8px 16px',
+              fontWeight: 600,
               fontSize: '0.95rem',
               cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              display: 'inline-flex',
-              alignItems: 'center'
+              transition: 'all 0.2s ease'
             }}
           >
             Plans

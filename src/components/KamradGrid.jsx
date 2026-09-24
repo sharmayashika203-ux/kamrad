@@ -230,8 +230,8 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
 
 
   return (
-    <section id="kamrads-section" style={{
-      padding: '90px 0',
+    <section id="kamrads-section" className="kamrad-grid-section" style={{
+      padding: '75px 0 90px 0',
       backgroundColor: '#F8FAFC'
     }}>
       <div className="container">
@@ -532,6 +532,14 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
         )}
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .kamrad-grid-section {
+            padding: 16px 0 36px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

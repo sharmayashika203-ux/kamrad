@@ -67,8 +67,8 @@ const DESTINATIONS_LIST = [
 
 export default function Destinations({ onSelectDest }) {
   return (
-    <section id="destinations-section" style={{
-      padding: '90px 0',
+    <section id="destinations-section" className="destinations-section" style={{
+      padding: '75px 0',
       backgroundColor: '#FFFFFF',
       borderTop: '1px solid #E2E8F0',
       borderBottom: '1px solid #E2E8F0'
@@ -259,6 +259,14 @@ export default function Destinations({ onSelectDest }) {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .destinations-section {
+            padding: 30px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

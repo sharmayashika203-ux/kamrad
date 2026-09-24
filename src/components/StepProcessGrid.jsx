@@ -38,8 +38,8 @@ const STEPS = [
 
 export default function StepProcessGrid() {
   return (
-    <section style={{
-      padding: '60px 0 80px 0',
+    <section className="step-process-section" style={{
+      padding: '50px 0 60px 0',
       backgroundColor: '#FAF9F9',
       position: 'relative'
     }}>
@@ -118,6 +118,14 @@ export default function StepProcessGrid() {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .step-process-section {
+            padding: 24px 0 12px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

@@ -30,8 +30,8 @@ export default function SafetySpotlight({ onOpenAuth }) {
   ];
 
   return (
-    <section id="safety-section" style={{
-      padding: '90px 0',
+    <section id="safety-section" className="safety-section" style={{
+      padding: '75px 0',
       backgroundColor: '#FFFFFF',
       borderTop: '1px solid #E2E8F0',
       borderBottom: '1px solid #E2E8F0',
@@ -206,6 +206,14 @@ export default function SafetySpotlight({ onOpenAuth }) {
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .safety-section {
+            padding: 24px 0 36px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
