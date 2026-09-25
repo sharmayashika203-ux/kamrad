@@ -6,6 +6,7 @@ import confetti from 'canvas-confetti';
 const Card = ({ kamrad, onSwipe, isTop, index, onInteract }) => {
   const x = useMotionValue(0);
   const controls = useAnimation();
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   // 3D card deck layer settings so cards behind peek out with realistic angle & scale
   const STACK_PRESETS = [
@@ -33,7 +34,14 @@ const Card = ({ kamrad, onSwipe, isTop, index, onInteract }) => {
   const zIndex = 100 - index;
   const opacity = index > 2 ? 0 : 1;
 
-  // Initialize card controls state on mount/update
+  const handleInteraction = () => {
+    if (!hasUserInteracted) {
+      setHasUserInteracted(true);
+      if (onInteract) onInteract();
+    }
+  };
+
+  // Initialize card controls state on mount/update & start continuous left/right flicking
   useEffect(() => {
     controls.set({
       x: 0,
@@ -43,20 +51,22 @@ const Card = ({ kamrad, onSwipe, isTop, index, onInteract }) => {
       opacity: opacity
     });
 
-    if (isTop) {
-      const peekTimer = setTimeout(() => {
-        controls.start({
-          x: [-20, 20, -10, 10, 0],
-          rotate: [-3.5, 3.5, -1.5, 1.5, 0],
-          transition: { duration: 1.2, ease: "easeInOut" }
-        });
-      }, 350);
-      return () => clearTimeout(peekTimer);
+    if (isTop && !hasUserInteracted) {
+      controls.start({
+        x: [0, -26, 0, 26, 0],
+        rotate: [0, -5, 0, 5, 0],
+        transition: {
+          duration: 1.8,
+          ease: "easeInOut",
+          repeat: Infinity,
+          repeatDelay: 0.4
+        }
+      });
     }
-  }, [isTop, index, kamrad?.id]);
+  }, [isTop, index, kamrad?.id, hasUserInteracted]);
 
   const handleDragEnd = async (e, info) => {
-    if (onInteract) onInteract();
+    handleInteraction();
     const offset = info.offset.x;
     const velocity = info.velocity.x;
     const swipeThreshold = 100;
@@ -95,7 +105,7 @@ const Card = ({ kamrad, onSwipe, isTop, index, onInteract }) => {
       }}
       drag={isTop ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
-      onDragStart={() => { if (onInteract) onInteract(); }}
+      onDragStart={() => handleInteraction()}
       onDragEnd={handleDragEnd}
       animate={controls}
     >
@@ -220,7 +230,7 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
     setShowSwipeHint(true);
     const timer = setTimeout(() => {
       setShowSwipeHint(false);
-    }, 2800);
+    }, 7000);
     return () => clearTimeout(timer);
   }, [kamrads]);
 
@@ -267,40 +277,52 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
       
       <div style={{ position: 'relative', width: '100%', height: '600px', perspective: '1000px', marginBottom: '24px' }}>
         
-        {/* Animated 2.8s Swipe Hint Popup Badge */}
+        {/* Animated Swipe Hint Popup Badge */}
         <AnimatePresence>
           {showSwipeHint && (
             <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.85 }}
+              initial={{ opacity: 0, y: -25, scale: 0.85 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -15, scale: 0.85 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
               style={{
                 position: 'absolute',
-                top: '16px',
+                top: '-12px',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 zIndex: 250,
                 pointerEvents: 'none',
-                backgroundColor: 'rgba(11, 19, 43, 0.94)',
+                backgroundColor: 'rgba(11, 19, 43, 0.95)',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
                 border: '1.5px solid #FF5E00',
                 borderRadius: '999px',
-                padding: '8px 18px',
+                padding: '9px 20px',
                 color: '#FFFFFF',
-                boxShadow: '0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(255, 94, 0, 0.45)',
+                boxShadow: '0 12px 35px rgba(0,0,0,0.45), 0 0 25px rgba(255, 94, 0, 0.5)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '8px',
-                fontSize: '0.8rem',
+                gap: '10px',
+                fontSize: '0.82rem',
                 fontWeight: 800,
                 whiteSpace: 'nowrap'
               }}
             >
-              <span style={{ color: '#00E676' }}>👈 Swipe Left to Connect</span>
-              <span style={{ color: '#64748B', fontWeight: 400 }}>•</span>
-              <span style={{ color: '#FF3D00' }}>Pass 👉</span>
+              <motion.span
+                animate={{ x: [-4, 0, -4] }}
+                transition={{ repeat: Infinity, duration: 1 }}
+                style={{ color: '#00E676', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
+              >
+                👈 Swipe Left to Connect
+              </motion.span>
+              <span style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>•</span>
+              <motion.span
+                animate={{ x: [4, 0, 4] }}
+                transition={{ repeat: Infinity, duration: 1 }}
+                style={{ color: '#FF3D00', display: 'inline-flex', alignItems: 'center', gap: '3px' }}
+              >
+                Pass 👉
+              </motion.span>
             </motion.div>
           )}
         </AnimatePresence>
