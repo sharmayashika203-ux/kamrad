@@ -6,8 +6,8 @@ export default function HowItWorks({ onOpenWizard }) {
   const steps = [
     {
       num: "01",
-      title: "100% Government ID Verification",
-      desc: "Every Kamrad links verified social profiles and completes government ID verification. Zero fake accounts allowed.",
+      title: "100% Official ID Verification",
+      desc: "Every Kamrad links verified social profiles and completes official ID verification. Zero fake accounts allowed.",
       icon: <ShieldCheck size={28} style={{ color: '#10B981' }} />,
       badge: "Safety First",
       color: '#10B981',

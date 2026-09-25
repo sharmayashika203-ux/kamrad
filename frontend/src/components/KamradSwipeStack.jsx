@@ -3,9 +3,23 @@ import { motion, useMotionValue, useTransform, useAnimation, AnimatePresence } f
 import { Heart, MapPin, Calendar, X, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-const Card = ({ kamrad, onSwipe, isTop, index }) => {
+const Card = ({ kamrad, onSwipe, isTop, index, onInteract }) => {
   const x = useMotionValue(0);
   const controls = useAnimation();
+
+  // 3D card deck layer settings so cards behind peek out with realistic angle & scale
+  const STACK_PRESETS = [
+    { scale: 1, y: 0, rotate: 0, shadow: '0 20px 45px rgba(15, 23, 42, 0.16)' },
+    { scale: 0.94, y: 14, rotate: -3.5, shadow: '0 15px 30px rgba(15, 23, 42, 0.12)' },
+    { scale: 0.88, y: 28, rotate: 3.8, shadow: '0 10px 22px rgba(15, 23, 42, 0.08)' }
+  ];
+
+  const preset = STACK_PRESETS[index] || {
+    scale: Math.max(0.8, 1 - index * 0.06),
+    y: index * 14,
+    rotate: (index % 2 === 0 ? 3.5 : -3.5),
+    shadow: 'none'
+  };
 
   // Rotate based on x offset
   const rotate = useTransform(x, [-200, 200], [-10, 10]);
@@ -17,11 +31,32 @@ const Card = ({ kamrad, onSwipe, isTop, index }) => {
 
   // Stack styling based on index (0 is top)
   const zIndex = 100 - index;
-  const initialScale = 1 - index * 0.05;
-  const initialY = index * 20;
   const opacity = index > 2 ? 0 : 1;
 
+  // Initialize card controls state on mount/update
+  useEffect(() => {
+    controls.set({
+      x: 0,
+      y: isTop ? 0 : preset.y,
+      scale: isTop ? 1 : preset.scale,
+      rotate: isTop ? 0 : preset.rotate,
+      opacity: opacity
+    });
+
+    if (isTop) {
+      const peekTimer = setTimeout(() => {
+        controls.start({
+          x: [-20, 20, -10, 10, 0],
+          rotate: [-3.5, 3.5, -1.5, 1.5, 0],
+          transition: { duration: 1.2, ease: "easeInOut" }
+        });
+      }, 350);
+      return () => clearTimeout(peekTimer);
+    }
+  }, [isTop, index, kamrad?.id]);
+
   const handleDragEnd = async (e, info) => {
+    if (onInteract) onInteract();
     const offset = info.offset.x;
     const velocity = info.velocity.x;
     const swipeThreshold = 100;
@@ -49,9 +84,9 @@ const Card = ({ kamrad, onSwipe, isTop, index }) => {
         right: 0,
         bottom: 0,
         x: isTop ? x : 0,
-        y: isTop ? 0 : initialY,
-        scale: isTop ? scale : initialScale,
-        rotate: isTop ? rotate : 0,
+        y: isTop ? 0 : preset.y,
+        scale: isTop ? scale : preset.scale,
+        rotate: isTop ? rotate : preset.rotate,
         zIndex,
         opacity,
         display: 'flex',
@@ -60,12 +95,9 @@ const Card = ({ kamrad, onSwipe, isTop, index }) => {
       }}
       drag={isTop ? 'x' : false}
       dragConstraints={{ left: 0, right: 0 }}
+      onDragStart={() => { if (onInteract) onInteract(); }}
       onDragEnd={handleDragEnd}
       animate={controls}
-      whileTap={isTop ? { cursor: 'grabbing' } : {}}
-      initial={{ scale: 0.8, opacity: 0, y: 50 }}
-      animate={{ scale: isTop ? 1 : initialScale, opacity, y: isTop ? 0 : initialY }}
-      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       <div style={{
         backgroundColor: '#FFFFFF',
@@ -181,12 +213,23 @@ const Card = ({ kamrad, onSwipe, isTop, index }) => {
 
 export default function KamradSwipeStack({ kamrads = [], onConnect }) {
   const [cards, setCards] = useState(kamrads);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
 
   useEffect(() => {
     setCards(kamrads);
+    setShowSwipeHint(true);
+    const timer = setTimeout(() => {
+      setShowSwipeHint(false);
+    }, 2800);
+    return () => clearTimeout(timer);
   }, [kamrads]);
 
+  const dismissHint = () => {
+    setShowSwipeHint(false);
+  };
+
   const handleSwipe = (direction, kamrad) => {
+    dismissHint();
     if (direction === 'left') {
       confetti({
         particleCount: 50,
@@ -204,6 +247,7 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
   };
 
   const manualSwipe = (direction) => {
+    dismissHint();
     if (cards.length === 0) return;
     handleSwipe(direction, cards[0]);
   };
@@ -219,9 +263,48 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: '400px', margin: '0 auto', position: 'relative' }}>
       
       <div style={{ position: 'relative', width: '100%', height: '600px', perspective: '1000px', marginBottom: '24px' }}>
+        
+        {/* Animated 2.8s Swipe Hint Popup Badge */}
+        <AnimatePresence>
+          {showSwipeHint && (
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.85 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.85 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              style={{
+                position: 'absolute',
+                top: '16px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 250,
+                pointerEvents: 'none',
+                backgroundColor: 'rgba(11, 19, 43, 0.94)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: '1.5px solid #FF5E00',
+                borderRadius: '999px',
+                padding: '8px 18px',
+                color: '#FFFFFF',
+                boxShadow: '0 12px 32px rgba(0,0,0,0.4), 0 0 24px rgba(255, 94, 0, 0.45)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '0.8rem',
+                fontWeight: 800,
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <span style={{ color: '#00E676' }}>👈 Swipe Left to Connect</span>
+              <span style={{ color: '#64748B', fontWeight: 400 }}>•</span>
+              <span style={{ color: '#FF3D00' }}>Pass 👉</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <AnimatePresence>
           {cards.slice(0, 3).map((kamrad, index) => (
             <Card
@@ -230,10 +313,31 @@ export default function KamradSwipeStack({ kamrads = [], onConnect }) {
               index={index}
               isTop={index === 0}
               onSwipe={handleSwipe}
+              onInteract={dismissHint}
             />
           ))}
         </AnimatePresence>
       </div>
+
+      {/* Cards Remaining Deck Indicator */}
+      {cards.length > 0 && (
+        <div style={{
+          fontSize: '0.78rem',
+          fontWeight: 800,
+          color: '#475569',
+          marginBottom: '16px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
+          backgroundColor: '#FFFFFF',
+          padding: '6px 16px',
+          borderRadius: '999px',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 4px 12px rgba(15, 23, 42, 0.05)'
+        }}>
+          <span>🎴</span> {cards.length} {cards.length === 1 ? 'Companion' : 'Companions'} in Deck • Swipe to Explore
+        </div>
+      )}
 
       {/* Manual Swipe Buttons */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>

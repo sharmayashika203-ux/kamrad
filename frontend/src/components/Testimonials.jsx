@@ -35,7 +35,7 @@ const TESTIMONIALS = [
 export default function Testimonials() {
   return (
     <section style={{
-      padding: '90px 0',
+      padding: '45px 0 65px 0',
       backgroundColor: '#FFFFFF',
       borderTop: '1px solid #E2E8F0',
       borderBottom: '1px solid #E2E8F0'
@@ -43,7 +43,7 @@ export default function Testimonials() {
       <div className="container">
         
         <ScrollReveal animation="fade-up" delay={0}>
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
             <div className="section-tag">
               <Heart size={14} /> Traveler Stories
             </div>

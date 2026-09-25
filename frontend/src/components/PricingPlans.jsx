@@ -58,7 +58,7 @@ export default function PricingPlans({ onOpenAuth, onSuccessSubscription }) {
         "Priority AI Match Radar Engine",
         "Split Cost Escrow Payment Protection",
         "Unlimited Trip Requests & Destination Alerts",
-        "24/7 SOS Emergency In-App Safety Line"
+        "24/7 Live In-App Safety & Support Line"
       ],
       cta: "Start 7-Day Free Trial",
       popular: true,

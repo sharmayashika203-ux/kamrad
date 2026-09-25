@@ -7,8 +7,8 @@ export default function SafetySpotlight({ onOpenAuth }) {
 
   const safetyFeatures = [
     {
-      title: "Government ID & Photo Check",
-      desc: "Verified profiles complete government ID checking to maintain platform safety and trust.",
+      title: "Official ID & Photo Check",
+      desc: "Verified profiles complete official ID checking to maintain platform safety and trust.",
       icon: <UserCheck size={24} style={{ color: '#10B981' }} />
     },
 
@@ -18,7 +18,7 @@ export default function SafetySpotlight({ onOpenAuth }) {
       icon: <FileCheck size={24} style={{ color: '#00F0FF' }} />
     },
     {
-      title: "24/7 SOS Emergency Button",
+      title: "24/7 Live Support Button",
       desc: "Instant live GPS sharing & emergency hotline connect within the Kamrad Mobile App.",
       icon: <PhoneCall size={24} style={{ color: '#FF0055' }} />
     },
@@ -160,8 +160,8 @@ export default function SafetySpotlight({ onOpenAuth }) {
               {/* Checklist */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '24px' }}>
                 {[
-                  'Government Passport / National ID Check',
-                  'Government ID & Profile Verification',
+                  'Passport & National ID Check',
+                  'Official ID & Profile Verification',
                   'Mobile Phone OTP & Email Ownership',
                   'LinkedIn & Instagram Social Verification',
                   'Community Review & Safety Trust Rating'

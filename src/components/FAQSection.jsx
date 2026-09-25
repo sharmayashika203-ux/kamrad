@@ -40,7 +40,7 @@ const DESTINATION_FAQS = [
     category: 'safety',
     icon: '🛡️',
     question: "Is it safe to meet a travel companion in a foreign destination?",
-    answer: "Safety is our top priority. Every profile undergoes compulsory 100% Government ID verification, phone OTP, and email checks before connecting. You can also review community ratings and verified social accounts prior to meeting.",
+    answer: "Safety is our top priority. Every profile undergoes compulsory 100% Official ID verification, phone OTP, and email checks before connecting. You can also review community ratings and verified social accounts prior to meeting.",
     highlight: "100% ID Verified profiles ensure total peace of mind abroad."
   },
   {
@@ -121,7 +121,7 @@ export default function FAQSection() {
 
   return (
     <section id="faq-section" className="faq-section" style={{
-      padding: '70px 0',
+      padding: '30px 0 60px 0',
       background: 'linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)',
       position: 'relative',
       overflow: 'hidden'
@@ -438,7 +438,7 @@ export default function FAQSection() {
       <style>{`
         @media (max-width: 768px) {
           .faq-section {
-            padding: 30px 0 !important;
+            padding: 12px 0 24px 0 !important;
           }
         }
       `}</style>

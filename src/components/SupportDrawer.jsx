@@ -80,7 +80,7 @@ export default function SupportDrawer({ isOpen, onClose }) {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
             {[
-              { q: 'How does ID verification work?', a: 'Upload a government passport or driving license. Our AI system runs facial 3D liveness detection in under 60 seconds.' },
+              { q: 'How does ID verification work?', a: 'Upload an official passport or driving license. Our AI system runs facial 3D liveness detection in under 60 seconds.' },
               { q: 'Is Kamrad Finder free to use?', a: 'Yes! The Explorer plan is 100% free forever for browsing verified profiles and creating trip posts.' },
               { q: 'How do split payments work?', a: 'Split payments are held in escrow protection until both travel partners confirm arrival at the destination.' }
             ].map((faq, i) => (

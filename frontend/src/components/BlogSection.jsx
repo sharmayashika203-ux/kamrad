@@ -16,7 +16,7 @@ export const BLOG_POSTS = [
     summary: "Discover practical safety advice, from verifying travel buddies before meeting in public places to splitting accommodation costs safely while exploring top global destinations.",
     content: [
       "Traveling solo as a woman is one of the most empowering experiences in the world, but prioritizing personal safety is essential to making every journey smooth and memorable.",
-      "1. Verify Profiles Before Meeting: Always ensure your travel partner has completed 100% Government ID verification and linked active social profiles on Kamrad Finder.",
+      "1. Verify Profiles Before Meeting: Always ensure your travel partner has completed 100% Official ID verification and linked active social profiles on Kamrad Finder.",
       "2. Schedule a Pre-Trip Video Call: Utilize in-app 1:1 HD Video Calling to chat face-to-face, discuss travel expectations, and establish trust before booking flights or accommodation.",
       "3. Always Meet in Public Places First: When meeting up with a travel buddy in a new city (e.g. airport arrivals hall or hotel lobby), choose a well-lit public cafe or central landmark.",
       "4. Share Your Live Itinerary: Leave a copy of your flight details, hotel reservations, and emergency contact numbers with a family member or trusted friend back home.",
@@ -74,8 +74,8 @@ export default function BlogSection({ onOpenWizard }) {
   };
 
   return (
-    <section id="blog-section" style={{
-      padding: '85px 0',
+    <section id="blog-section" className="blog-section" style={{
+      padding: '35px 0 30px 0',
       backgroundColor: '#FFFFFF',
       position: 'relative',
       borderTop: '1px solid #E2E8F0'
@@ -367,6 +367,13 @@ export default function BlogSection({ onOpenWizard }) {
         </div>
       )}
 
+      <style>{`
+        @media (max-width: 768px) {
+          .blog-section {
+            padding: 16px 0 16px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

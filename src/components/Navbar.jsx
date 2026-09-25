@@ -567,7 +567,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               textDecoration: 'none'
             }}
           >
-            <span>How Kamrad Finder Works</span>
+            <span>⚡ How Kamrad Finder Works</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
           </Link>
 
@@ -637,7 +637,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
               justifyContent: 'space-between'
             }}
           >
-            <span>📞 24/7 SOS Support</span>
+            <span>📞 24/7 Traveler Support</span>
             <ArrowRight size={16} style={{ color: '#FF5E00' }} />
           </button>
 

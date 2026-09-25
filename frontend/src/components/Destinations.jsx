@@ -68,7 +68,7 @@ const DESTINATIONS_LIST = [
 export default function Destinations({ onSelectDest }) {
   return (
     <section id="destinations-section" className="destinations-section" style={{
-      padding: '75px 0',
+      padding: '50px 0 35px 0',
       backgroundColor: '#FFFFFF',
       borderTop: '1px solid #E2E8F0',
       borderBottom: '1px solid #E2E8F0'
