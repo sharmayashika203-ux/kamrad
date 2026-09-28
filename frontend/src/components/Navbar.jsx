@@ -449,7 +449,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
             </div>
           ) : (
             <button
-              onClick={onOpenAuth}
+              onClick={() => onOpenAuth && onOpenAuth('login')}
               className="desktop-auth-btn"
               style={{
                 backgroundColor: '#FFFFFF',
@@ -464,7 +464,7 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                 boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
               }}
             >
-              Login / Join
+              Sign In
             </button>
           )}
 
@@ -682,12 +682,12 @@ export default function Navbar({ onOpenWizard, onOpenAuth, onOpenSupport, onOpen
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenAuth();
+                    if (onOpenAuth) onOpenAuth('login');
                   }}
                   className="btn-outline"
                   style={{ justifyContent: 'center', borderRadius: '14px', padding: '12px', fontSize: '0.9rem' }}
                 >
-                  Login / Join
+                  Sign In
                 </button>
 
                 <button

@@ -632,7 +632,7 @@ export default function Footer({ onOpenWizard, onOpenAuth, onOpenSupport }) {
           
           {/* Copyright & Mail */}
           <div style={{ color: '#94A3B8' }}>
-            © {new Date().getFullYear()} <strong style={{ color: '#FFF' }}>Kamrad Finder Inc.</strong> All Rights Reserved. • Support:{' '}
+            © {new Date().getFullYear()} <strong style={{ color: '#FFF' }}>Kamrad Finder</strong> All Rights Reserved. • Support:{' '}
             <a href="mailto:info@kamradfinder.com" style={{ color: '#FF6B00', textDecoration: 'none', fontWeight: 700 }}>
               info@kamradfinder.com
             </a>

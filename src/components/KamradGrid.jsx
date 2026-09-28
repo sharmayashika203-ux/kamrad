@@ -3,7 +3,7 @@ import { ShieldCheck, Heart, MessageSquare, MapPin, Calendar, DollarSign, Star, 
 import ScrollReveal from './ScrollReveal';
 import confetti from 'canvas-confetti';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { calculateProfileCompletion } from '../lib/profileUtils';
+import { useAuth } from '../context/AuthContext';
 import KamradSwipeStack from './KamradSwipeStack';
 
 export const KAMRAD_DATA = [
@@ -118,6 +118,7 @@ export const KAMRAD_DATA = [
 ];
 
 export default function KamradGrid({ filterState, onConnectChat, onViewProfile }) {
+  const { user, profile } = useAuth();
   const [activeTab, setActiveTab] = useState('All');
   const [favorites, setFavorites] = useState({});
   const [dbProfiles, setDbProfiles] = useState([]);
@@ -198,7 +199,29 @@ export default function KamradGrid({ filterState, onConnectChat, onViewProfile }
     fetchLiveProfiles();
   }, []);
 
-  const combinedKamrads = [...dbProfiles, ...KAMRAD_DATA];
+  const currentUserCard = user && (profile?.full_name || user?.user_metadata?.full_name) ? {
+    id: user.id || 'usr_current',
+    name: `${profile?.full_name || user.user_metadata?.full_name} (You)`,
+    age: profile?.age || 25,
+    country: profile?.city ? `${profile.city}, ${profile.country || ''}` : (profile?.country || 'Global'),
+    avatar: profile?.profile_photo || user.user_metadata?.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80',
+    destination: profile?.city ? `${profile.city}, ${profile.country || ''}` : 'Bali, Indonesia',
+    dates: 'Flexible Dates',
+    vibe: 'Adventure',
+    gender: profile?.gender === 'male' ? 'Male' : 'Female',
+    matchScore: 99,
+    bio: profile?.bio || 'Verified solo traveler looking for companion trips.',
+    splitCost: 'Budget: Moderate',
+    tags: ['#VerifiedTraveler', '#MyProfile'],
+    verified: true,
+    tripsCompleted: 1,
+    rating: 5.0,
+    isSelf: true
+  } : null;
+
+  const combinedKamrads = currentUserCard
+    ? [currentUserCard, ...dbProfiles.filter(p => p.id !== currentUserCard.id), ...KAMRAD_DATA]
+    : [...dbProfiles, ...KAMRAD_DATA];
 
   const toggleFavorite = (e, id) => {
     e.stopPropagation();

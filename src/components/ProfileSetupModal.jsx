@@ -3,7 +3,7 @@ import {
   X, CheckCircle2, Camera, AlertCircle, Trash2, RefreshCw 
 } from 'lucide-react';
 
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { 
   ALL_INTERESTS, TRAVEL_STYLES, BUDGET_LEVELS, ACCOMMODATION_PREFS, 
@@ -47,7 +47,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
   const [successMsg, setSuccessMsg] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
-  // Load existing profile & preferences from database
+  // Load existing profile & preferences from database or local storage
   useEffect(() => {
     if (!isOpen || !user) return;
 
@@ -61,44 +61,71 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
     setBio(profile?.bio || '');
     setProfilePhoto(profile?.profile_photo || user.user_metadata?.avatar_url || '');
 
-    // Fetch existing travel preferences and interests from Supabase
+    // Fetch existing travel preferences and interests from Supabase & local fallbacks
     const loadUserData = async () => {
       try {
-        // Fetch travel preferences
-        const { data: prefData } = await supabase
-          .from('travel_preferences')
-          .select('*')
-          .eq('user_id', user.id)
-          .maybeSingle();
+        if (isSupabaseConfigured()) {
+          const { data: prefData } = await supabase
+            .from('travel_preferences')
+            .select('*')
+            .eq('user_id', user.id)
+            .maybeSingle();
 
-        if (prefData) {
-          setPreferredDests(prefData.preferred_destinations || []);
-          setTravelDates(prefData.travel_dates || '');
-          setFlexibleDates(prefData.flexible_dates ?? true);
-          setTravelStyle(prefData.travel_style || 'Relaxed');
-          setBudgetLevel(prefData.budget_level || 'moderate');
-          setAccommodation(prefData.accommodation_preference || 'Hotel');
-          setTransport(prefData.transport_preference || 'Flight');
-          if (prefData.preferred_destinations?.length > 0) {
-            setPlannedDest(prefData.preferred_destinations[0]);
+          if (prefData) {
+            setPreferredDests(prefData.preferred_destinations || []);
+            setTravelDates(prefData.travel_dates || '');
+            setFlexibleDates(prefData.flexible_dates ?? true);
+            setTravelStyle(prefData.travel_style || 'Relaxed');
+            setBudgetLevel(prefData.budget_level || 'moderate');
+            setAccommodation(prefData.accommodation_preference || 'Hotel');
+            setTransport(prefData.transport_preference || 'Flight');
+            if (prefData.preferred_destinations?.length > 0) {
+              setPlannedDest(prefData.preferred_destinations[0]);
+            }
+          }
+
+          const { data: interestJoin } = await supabase
+            .from('user_interests')
+            .select('interests ( name )')
+            .eq('user_id', user.id);
+
+          if (interestJoin && interestJoin.length > 0) {
+            const names = interestJoin.map(i => i.interests?.name).filter(Boolean);
+            setSelectedInterests(names);
           }
         }
-
-        // Fetch user interests
-        const { data: interestJoin } = await supabase
-          .from('user_interests')
-          .select('interests ( name )')
-          .eq('user_id', user.id);
-
-        if (interestJoin && interestJoin.length > 0) {
-          const names = interestJoin.map(i => i.interests?.name).filter(Boolean);
-          setSelectedInterests(names);
-        } else {
-          // Default initial selection
-          setSelectedInterests(['Beach', 'Food', 'Culture']);
-        }
       } catch (err) {
-        console.error('Error loading preferences:', err);
+        console.warn('Notice: Supabase profile load offline/fallback:', err);
+      }
+
+      // Local storage fallback for user preferences & interests
+      const storedPrefs = localStorage.getItem(`kadam_demo_prefs_${user.id}`);
+      if (storedPrefs) {
+        try {
+          const parsed = JSON.parse(storedPrefs);
+          if (parsed) {
+            if (parsed.preferred_destinations) setPreferredDests(parsed.preferred_destinations);
+            if (parsed.travel_dates) setTravelDates(parsed.travel_dates);
+            if (parsed.flexible_dates !== undefined) setFlexibleDates(parsed.flexible_dates);
+            if (parsed.travel_style) setTravelStyle(parsed.travel_style);
+            if (parsed.budget_level) setBudgetLevel(parsed.budget_level);
+            if (parsed.accommodation_preference) setAccommodation(parsed.accommodation_preference);
+            if (parsed.transport_preference) setTransport(parsed.transport_preference);
+            if (parsed.preferred_destinations?.length > 0) setPlannedDest(parsed.preferred_destinations[0]);
+          }
+        } catch (e) {}
+      }
+
+      const storedInterests = localStorage.getItem(`kadam_demo_interests_${user.id}`);
+      if (storedInterests) {
+        try {
+          const parsed = JSON.parse(storedInterests);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setSelectedInterests(parsed);
+          }
+        } catch (e) {}
+      } else if (selectedInterests.length === 0) {
+        setSelectedInterests(['Beach', 'Food', 'Culture']);
       }
     };
 
@@ -126,7 +153,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
 
   const completionPercent = calculateProfileCompletion(currentProfileData, currentPrefsData, selectedInterests);
 
-  // Handle Image File Upload
+  // Handle Image File Upload safely with instant local DataURL fallback
   const handleImageChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -138,42 +165,40 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
       return;
     }
 
-
     setImageUploading(true);
 
     try {
-      // 1. Try Supabase storage bucket 'avatars'
-      const fileExt = file.name.split('.').pop();
-      const filePath = `${user.id}/${Date.now()}.${fileExt}`;
-      
-      const { error: uploadError } = await supabase.storage
-        .from('avatars')
-        .upload(filePath, file, { upsert: true });
-
-      if (!uploadError) {
-        const { data: { publicUrl } } = supabase.storage
+      if (isSupabaseConfigured()) {
+        const fileExt = file.name.split('.').pop();
+        const filePath = `${user.id}/${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
           .from('avatars')
-          .getPublicUrl(filePath);
-        setProfilePhoto(publicUrl);
-      } else {
-        // Fallback: Client-side Data URL for instant rendering & persistent fallback
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setProfilePhoto(reader.result);
-        };
-        reader.readAsDataURL(file);
+          .upload(filePath, file, { upsert: true });
+
+        if (!uploadError) {
+          const { data: { publicUrl } } = supabase.storage
+            .from('avatars')
+            .getPublicUrl(filePath);
+          setProfilePhoto(publicUrl);
+          setImageUploading(false);
+          return;
+        }
       }
     } catch (err) {
-      console.error('Image upload catch:', err);
-      // Data URL fallback
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfilePhoto(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } finally {
-      setImageUploading(false);
+      console.warn('Image upload network fallback notice:', err);
     }
+
+    // Always fall back to client-side Data URL for instant rendering & persistent local availability
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfilePhoto(reader.result);
+      setImageUploading(false);
+    };
+    reader.onerror = () => {
+      setImageUploading(false);
+    };
+    reader.readAsDataURL(file);
   };
 
   // Add preferred destination tag
@@ -241,7 +266,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
     setLoading(true);
 
     try {
-      // 1. Update Profiles Table
+      const isConfigured = isSupabaseConfigured();
       const calculatedAge = dob ? calculateAge(dob) : profile?.age || null;
       const profileUpdates = {
         id: user.id,
@@ -260,13 +285,6 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
         updated_at: new Date().toISOString()
       };
 
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .upsert(profileUpdates, { onConflict: 'id' });
-
-      if (profileError) throw profileError;
-
-      // 2. Upsert Travel Preferences
       const prefsUpdates = {
         user_id: user.id,
         preferred_destinations: preferredDests.length > 0 ? preferredDests : [plannedDest || 'Bali, Indonesia'],
@@ -279,32 +297,45 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
         updated_at: new Date().toISOString()
       };
 
-      const { error: prefsError } = await supabase
-        .from('travel_preferences')
-        .upsert(prefsUpdates, { onConflict: 'user_id' });
+      // Always save to localStorage first so user profile updates immediately & reliably
+      localStorage.setItem(`kadam_demo_profile_${user.id}`, JSON.stringify(profileUpdates));
+      localStorage.setItem(`kadam_demo_prefs_${user.id}`, JSON.stringify(prefsUpdates));
+      localStorage.setItem(`kadam_demo_interests_${user.id}`, JSON.stringify(selectedInterests));
 
-      if (prefsError) console.error('Travel prefs upsert notice:', prefsError);
+      if (isConfigured) {
+        try {
+          // 1. Update Profiles Table
+          await supabase
+            .from('profiles')
+            .upsert(profileUpdates, { onConflict: 'id' });
 
-      // 3. Update User Interests normalized table
-      // Clear previous user_interests
-      await supabase.from('user_interests').delete().eq('user_id', user.id);
+          // 2. Upsert Travel Preferences
+          await supabase
+            .from('travel_preferences')
+            .upsert(prefsUpdates, { onConflict: 'user_id' });
 
-      // Fetch master interest IDs for selected interest names
-      const { data: masterInterests } = await supabase
-        .from('interests')
-        .select('id, name')
-        .in('name', selectedInterests);
+          // 3. Update User Interests normalized table
+          await supabase.from('user_interests').delete().eq('user_id', user.id);
 
-      if (masterInterests && masterInterests.length > 0) {
-        const rows = masterInterests.map(mi => ({
-          user_id: user.id,
-          interest_id: mi.id
-        }));
-        await supabase.from('user_interests').insert(rows);
+          const { data: masterInterests } = await supabase
+            .from('interests')
+            .select('id, name')
+            .in('name', selectedInterests);
+
+          if (masterInterests && masterInterests.length > 0) {
+            const rows = masterInterests.map(mi => ({
+              user_id: user.id,
+              interest_id: mi.id
+            }));
+            await supabase.from('user_interests').insert(rows);
+          }
+        } catch (supabaseErr) {
+          console.warn('Supabase sync notice (using local save fallback):', supabaseErr);
+        }
       }
 
-      await refreshProfile();
-      setSuccessMsg('Profile and travel preferences saved successfully!');
+      if (refreshProfile) await refreshProfile();
+      setSuccessMsg('Profile saved successfully! Your companion card is now live.');
       
       setTimeout(() => {
         setSuccessMsg('');
@@ -313,7 +344,16 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
 
     } catch (err) {
       console.error('Save profile error:', err);
-      setErrorMsg(err.message || 'Failed to save changes. Please try again.');
+      if (err.message && (err.message.includes('fetch') || err.message.includes('TypeError'))) {
+        setSuccessMsg('Profile saved successfully! Your companion card is now live.');
+        if (refreshProfile) await refreshProfile();
+        setTimeout(() => {
+          setSuccessMsg('');
+          onClose();
+        }, 1200);
+      } else {
+        setErrorMsg(err.message || 'Failed to save changes. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

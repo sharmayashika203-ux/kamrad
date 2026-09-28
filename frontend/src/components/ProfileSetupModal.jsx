@@ -3,7 +3,7 @@ import {
   X, CheckCircle2, Camera, AlertCircle, Trash2, RefreshCw 
 } from 'lucide-react';
 
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 import { 
   ALL_INTERESTS, TRAVEL_STYLES, BUDGET_LEVELS, ACCOMMODATION_PREFS, 
@@ -241,7 +241,7 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
     setLoading(true);
 
     try {
-      // 1. Update Profiles Table
+      const isConfigured = isSupabaseConfigured();
       const calculatedAge = dob ? calculateAge(dob) : profile?.age || null;
       const profileUpdates = {
         id: user.id,
@@ -260,6 +260,18 @@ export default function ProfileSetupModal({ isOpen, onClose }) {
         updated_at: new Date().toISOString()
       };
 
+      if (!isConfigured) {
+        localStorage.setItem(`kadam_demo_profile_${user.id}`, JSON.stringify(profileUpdates));
+        if (refreshProfile) await refreshProfile();
+        setSuccessMsg('Profile saved successfully! Your companion card is now live.');
+        setTimeout(() => {
+          setSuccessMsg('');
+          onClose();
+        }, 1200);
+        return;
+      }
+
+      // 1. Update Profiles Table
       const { error: profileError } = await supabase
         .from('profiles')
         .upsert(profileUpdates, { onConflict: 'id' });

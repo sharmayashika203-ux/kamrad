@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { X, Mail, Lock, Eye, EyeOff, Video, CheckCircle2, AlertCircle, ArrowRight, ArrowLeft, RefreshCw, User } from 'lucide-react';
+import { X, Mail, Lock, Eye, EyeOff, Video, CheckCircle2, AlertCircle, ArrowRight, ArrowLeft, RefreshCw, User, KeyRound } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context/AuthContext';
 
-export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
+export default function AuthModal({ isOpen, onClose, onAuthSuccess, initialTab = 'login' }) {
   const { refreshProfile, setDemoUser } = useAuth();
 
-  const [tab, setTab] = useState('login'); // 'login' or 'register'
+  const [tab, setTab] = useState(initialTab); // 'login', 'register', or 'forgot'
   const [step, setStep] = useState('credentials'); // 'credentials' or 'otp'
   
   const [email, setEmail] = useState('');
@@ -21,6 +21,17 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
   const [resendCooldown, setResendCooldown] = useState(0);
 
   useEffect(() => {
+    if (isOpen) {
+      setTab(initialTab || 'login');
+      setStep('credentials');
+      setOtpCode('');
+      setErrorMsg('');
+      setSuccessMsg('');
+      setLoading(false);
+    }
+  }, [isOpen, initialTab]);
+
+  useEffect(() => {
     let timer;
     if (resendCooldown > 0) {
       timer = setInterval(() => {
@@ -29,18 +40,6 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
     }
     return () => clearInterval(timer);
   }, [resendCooldown]);
-
-  // Reset modal state when closed or opened
-  useEffect(() => {
-    if (!isOpen) {
-      setStep('credentials');
-      setOtpCode('');
-      setErrorMsg('');
-      setSuccessMsg('');
-      setLoading(false);
-      setPassword('');
-    }
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -64,6 +63,11 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
       return;
     }
 
+    if (password.length < 6) {
+      setErrorMsg('Password must be at least 6 characters long.');
+      return;
+    }
+
     setLoading(true);
 
     // Sandbox Fallback
@@ -82,7 +86,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
 
         if (setDemoUser) setDemoUser(demoUser, demoSession);
 
-        setSuccessMsg('Authentication successful! Logging in...');
+        setSuccessMsg(tab === 'login' ? 'Login successful! Redirecting...' : 'Account created successfully! Logging in...');
         setTimeout(() => {
           onClose();
           if (onAuthSuccess) onAuthSuccess(demoSession);
@@ -95,11 +99,11 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
       if (tab === 'login') {
         const { data, error } = await supabase.auth.signInWithPassword({
           email: email.trim().toLowerCase(),
-          password: password || 'password123',
+          password: password,
         });
 
         if (error) {
-          // If password fails, try OTP flow fallback
+          // Fallback to OTP if password login fails
           const otpRes = await supabase.auth.signInWithOtp({
             email: email.trim().toLowerCase(),
           });
@@ -126,7 +130,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
         // Register flow
         const { data, error } = await supabase.auth.signUp({
           email: email.trim().toLowerCase(),
-          password: password || 'password123',
+          password: password,
           options: {
             data: { full_name: name.trim() }
           }
@@ -152,7 +156,47 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
       }
     } catch (err) {
       console.error('Auth error:', err);
-      setErrorMsg('Unable to connect to authentication server. Please check your internet connection.');
+      setErrorMsg('Unable to connect to authentication server. Please check your connection.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Forgot Password Handler
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    if (!email || !email.includes('@')) {
+      setErrorMsg('Please enter your registered email address.');
+      return;
+    }
+
+    setLoading(true);
+
+    if (!isConfigured) {
+      setTimeout(() => {
+        setLoading(false);
+        setSuccessMsg(`Password reset link sent to ${email.trim()}! Please check your email inbox.`);
+      }, 500);
+      return;
+    }
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {
+        redirectTo: window.location.origin + '/reset-password',
+      });
+
+      if (error) {
+        setErrorMsg(error.message || 'Failed to send password reset email.');
+      } else {
+        setSuccessMsg(`Password reset link sent to ${email.trim()}! Please check your inbox and follow the instructions.`);
+      }
+    } catch (err) {
+      setErrorMsg('Network error sending password reset email.');
     } finally {
       setLoading(false);
     }
@@ -273,25 +317,75 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
           backgroundColor: '#F0FDF4',
           border: '1.5px solid #DCFCE7',
           borderRadius: '16px',
-          padding: '14px 16px',
-          marginBottom: '20px',
+          padding: '12px 16px',
+          marginBottom: '18px',
           display: 'flex',
-          alignItems: 'flex-start',
+          alignItems: 'center',
           gap: '12px'
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10B981', flexShrink: 0, marginTop: '2px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#10B981', flexShrink: 0 }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
             <Video size={18} />
           </div>
           <div>
-            <div style={{ fontWeight: 800, fontSize: '0.9rem', color: '#0F172A' }}>
-              Live video is available now
+            <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#0F172A' }}>
+              Live video authentication ready
             </div>
-            <div style={{ fontSize: '0.78rem', color: '#475569', marginTop: '2px', lineHeight: 1.35 }}>
-              Your device & browser support 1:1 video calling.
+            <div style={{ fontSize: '0.75rem', color: '#475569', marginTop: '1px' }}>
+              100% ID Verified & Safe Solo Travel Matching
             </div>
           </div>
         </div>
+
+        {/* Top Tab Mode Switcher (Sign In | Sign Up) */}
+        {tab !== 'forgot' && step === 'credentials' && (
+          <div style={{
+            display: 'flex',
+            backgroundColor: '#F1F5F9',
+            borderRadius: '14px',
+            padding: '4px',
+            marginBottom: '20px'
+          }}>
+            <button
+              type="button"
+              onClick={() => { setTab('login'); setErrorMsg(''); setSuccessMsg(''); }}
+              style={{
+                flex: 1,
+                padding: '10px',
+                borderRadius: '10px',
+                border: 'none',
+                backgroundColor: tab === 'login' ? '#FFFFFF' : 'transparent',
+                color: tab === 'login' ? '#0F172A' : '#64748B',
+                fontWeight: 800,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                boxShadow: tab === 'login' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => { setTab('register'); setErrorMsg(''); setSuccessMsg(''); }}
+              style={{
+                flex: 1,
+                padding: '10px',
+                borderRadius: '10px',
+                border: 'none',
+                backgroundColor: tab === 'register' ? '#FFFFFF' : 'transparent',
+                color: tab === 'register' ? '#0F172A' : '#64748B',
+                fontWeight: 800,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                boxShadow: tab === 'register' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
 
         {/* Error Alert Banner */}
         {errorMsg && (
@@ -333,8 +427,8 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
           </div>
         )}
 
-        {/* Step 1: Credentials Form */}
-        {step === 'credentials' && (
+        {/* MODE 1 & 2: Sign In / Sign Up Credentials Form */}
+        {tab !== 'forgot' && step === 'credentials' && (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             
             {tab === 'register' && (
@@ -369,7 +463,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
             {/* Email Field */}
             <div>
               <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#1E293B', marginBottom: '6px', display: 'block' }}>
-                Email
+                Email Address
               </label>
               <div style={{ position: 'relative' }}>
                 <Mail size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
@@ -403,8 +497,8 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                 {tab === 'login' && (
                   <button
                     type="button"
-                    onClick={() => alert("A password reset link will be sent to your email address.")}
-                    style={{ background: 'none', border: 'none', color: '#D97706', fontSize: '0.8rem', fontWeight: 600, cursor: 'pointer' }}
+                    onClick={() => { setTab('forgot'); setErrorMsg(''); setSuccessMsg(''); }}
+                    style={{ background: 'none', border: 'none', color: '#FF5E00', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer' }}
                   >
                     Forgot password?
                   </button>
@@ -448,25 +542,25 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                 width: '100%',
                 padding: '14px',
                 borderRadius: '12px',
-                backgroundColor: '#D99436',
+                backgroundColor: '#FF5E00',
                 color: '#FFFFFF',
                 fontWeight: 800,
                 fontSize: '0.95rem',
                 border: 'none',
                 cursor: loading ? 'not-allowed' : 'pointer',
-                boxShadow: '0 4px 12px rgba(217, 148, 54, 0.25)',
+                boxShadow: '0 4px 14px rgba(255, 94, 0, 0.3)',
                 transition: 'all 0.2s ease',
                 marginTop: '4px'
               }}
             >
-              {loading ? 'Please wait...' : tab === 'login' ? 'Log In' : 'Sign Up'}
+              {loading ? 'Please wait...' : tab === 'login' ? 'Sign In' : 'Create Account'}
             </button>
 
             {/* Divider */}
-            <div style={{ display: 'flex', alignItems: 'center', margin: '14px 0 6px 0', gap: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', margin: '12px 0 4px 0', gap: '12px' }}>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#E2E8F0' }} />
               <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                OR LOG IN WITH
+                OR CONTINUE WITH
               </span>
               <div style={{ flex: 1, height: '1px', backgroundColor: '#E2E8F0' }} />
             </div>
@@ -530,14 +624,14 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
             </div>
 
             {/* Bottom Account Switcher */}
-            <div style={{ textAlign: 'center', marginTop: '12px', fontSize: '0.85rem', color: '#64748B' }}>
+            <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.85rem', color: '#64748B' }}>
               {tab === 'login' ? (
                 <>
                   Don't have an account?{' '}
                   <button
                     type="button"
                     onClick={() => { setTab('register'); setErrorMsg(''); setSuccessMsg(''); }}
-                    style={{ background: 'none', border: 'none', color: '#D97706', fontWeight: 700, cursor: 'pointer' }}
+                    style={{ background: 'none', border: 'none', color: '#FF5E00', fontWeight: 700, cursor: 'pointer' }}
                   >
                     Sign up
                   </button>
@@ -548,14 +642,108 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                   <button
                     type="button"
                     onClick={() => { setTab('login'); setErrorMsg(''); setSuccessMsg(''); }}
-                    style={{ background: 'none', border: 'none', color: '#D97706', fontWeight: 700, cursor: 'pointer' }}
+                    style={{ background: 'none', border: 'none', color: '#FF5E00', fontWeight: 700, cursor: 'pointer' }}
                   >
-                    Log in
+                    Sign in
                   </button>
                 </>
               )}
             </div>
 
+          </form>
+        )}
+
+        {/* MODE 3: Forgot Password Form */}
+        {tab === 'forgot' && (
+          <form onSubmit={handleForgotPassword} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+              <div style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '14px',
+                backgroundColor: '#FFF4EC',
+                color: '#FF5E00',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 12px auto'
+              }}>
+                <KeyRound size={24} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F172A', marginBottom: '6px' }}>
+                Forgot Password?
+              </h3>
+              <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.4 }}>
+                Enter your email address below and we'll send you instructions to reset your password.
+              </p>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.82rem', fontWeight: 700, color: '#1E293B', marginBottom: '6px', display: 'block' }}>
+                Email Address
+              </label>
+              <div style={{ position: 'relative' }}>
+                <Mail size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#94A3B8' }} />
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  style={{
+                    width: '100%',
+                    padding: '12px 14px 12px 42px',
+                    borderRadius: '12px',
+                    border: '1.5px solid #E2E8F0',
+                    backgroundColor: '#F8FAFC',
+                    fontSize: '0.9rem',
+                    color: '#0F172A',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: '12px',
+                backgroundColor: '#FF5E00',
+                color: '#FFFFFF',
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                border: 'none',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                boxShadow: '0 4px 14px rgba(255, 94, 0, 0.3)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              {loading ? 'Sending Link...' : 'Send Reset Link'}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => { setTab('login'); setErrorMsg(''); setSuccessMsg(''); }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#64748B',
+                fontWeight: 700,
+                fontSize: '0.85rem',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                marginTop: '4px'
+              }}
+            >
+              <ArrowLeft size={16} /> Back to Sign In
+            </button>
           </form>
         )}
 
@@ -578,7 +766,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                   width: '100%',
                   padding: '12px',
                   borderRadius: '12px',
-                  border: '2px solid #D99436',
+                  border: '2px solid #FF5E00',
                   fontSize: '1.4rem',
                   fontWeight: 900,
                   letterSpacing: '0.4em',
@@ -596,7 +784,7 @@ export default function AuthModal({ isOpen, onClose, onAuthSuccess }) {
                 width: '100%',
                 padding: '14px',
                 borderRadius: '12px',
-                backgroundColor: '#D99436',
+                backgroundColor: '#FF5E00',
                 color: '#FFFFFF',
                 fontWeight: 800,
                 fontSize: '0.95rem',

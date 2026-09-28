@@ -43,9 +43,15 @@ function AppContent() {
   // Modals & Drawers state
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login'); // 'login', 'register', or 'forgot'
   const [isProfileSetupOpen, setIsProfileSetupOpen] = useState(false);
   const [isSupportOpen, setIsSupportOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+
+  const handleOpenAuth = (mode = 'login') => {
+    setAuthMode(mode);
+    setIsAuthOpen(true);
+  };
   
   // Connection & Match state
   const [activeChatKamrad, setActiveChatKamrad] = useState(null);
@@ -114,7 +120,7 @@ function AppContent() {
       {/* 2. Main Navigation Bar */}
       <Navbar
         onOpenWizard={() => setIsWizardOpen(true)}
-        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenAuth={handleOpenAuth}
         onOpenSupport={() => setIsSupportOpen(true)}
         onOpenProfileSetup={() => setIsProfileSetupOpen(true)}
         onOpenNotifications={() => setIsNotificationsOpen(true)}
@@ -208,6 +214,7 @@ function AppContent() {
 
       <AuthModal
         isOpen={isAuthOpen}
+        initialTab={authMode}
         onClose={() => setIsAuthOpen(false)}
         onAuthSuccess={handleAuthSuccess}
       />
